@@ -3,106 +3,1070 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Frenzy Client — modern Minecraft Java launcher and client.">
-  <title>Frenzy Client — Official</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="nav">
-    <a class="brand" href="#home"><span>◆</span> FRENZY</a>
-    <nav>
-      <a href="#features">Features</a>
-      <a href="#download">Download</a>
-      <a href="#support">Support</a>
-    </nav>
-    <a class="nav-btn" href="#download">Download</a>
-  </header>
+  <meta name="theme-color" content="#09070d">
 
-  <main id="home">
-    <section class="hero" id="home">
-      <div class="badge">MINECRAFT JAVA • FRENZY CLIENT</div>
-      <h1>Play smarter.<br><span>Play Frenzy.</span></h1>
-      <p>A modern Minecraft Java launcher built for a clean, fast and customizable experience.</p>
-      <div class="actions">
-        <a class="primary" href="#download">Download for Windows</a>
-        <a class="secondary" href="#features">Explore features</a>
-      </div>
-      <p class="small">Official Frenzy Client downloads and resources.</p>
-    </section>
+  <meta
+    name="description"
+    content="Frenzy Client — a modern Minecraft Java launcher and client."
+  >
 
-    <section id="features" class="section">
-      <div class="section-head"><span>01</span><h2>Everything in one place.</h2></div>
-      <div class="grid">
-        <article><b>⚡ Fast Launcher</b><p>Clean modern dashboard for launching and managing Minecraft.</p></article>
-        <article><b>🧩 Mod Management</b><p>Manage compatible mods and client components from one place.</p></article>
-        <article><b>🎨 Client Experience</b><p>Frenzy branding, HUD features and a polished gaming interface.</p></article>
-        <article><b>🔐 Secure Updates</b><p>Release verification and signed-update infrastructure ready for deployment.</p></article>
-        <article><b>👤 Microsoft Login</b><p>Official authentication flow support for legitimate Minecraft accounts.</p></article>
-        <article><b>🛠 Diagnostics</b><p>Useful launcher diagnostics and release tooling for troubleshooting.</p></article>
-      </div>
-    </section>
+  <title>Frenzy Client — Play Without Limits</title>
 
-    <section id="download" class="download section">
-      <div>
-        <div class="badge">LATEST RELEASE</div>
-        <h2>Frenzy Client v9</h2>
-        <p>Download the official Frenzy Client launcher or get the Frenzy PvP Texture Pack.</p>
-      </div>
-
-      <div class="download-buttons">
-        <a id="downloadBtn" class="primary big" href="#" aria-disabled="true">Download for Windows</a>
-
-        <a
-          id="texturePackBtn"
-          class="secondary big"
-          href="https://github.com/DeveloperFrenz/Frenzy-pvp-texturepack/raw/refs/heads/main/%C2%A7d%C2%A7lFrenzy%20%C2%A7f%C2%A7lPvp%2016x.zip"
-        >Download Frenzy PvP Texture Pack</a>
-      </div>
-    </section>
-
-    <section id="support" class="section support">
-      <div class="section-head"><span>02</span><h2>Need help?</h2></div>
-      <div class="support-grid">
-        <a class="support-card" href="https://discord.gg/SvzQt36jrU" target="_blank" rel="noopener">
-          <b>Discord Support</b><span>Join the Frenzy community →</span>
-        </a>
-        <a class="support-card" href="mailto:airoxofficial456@gmail.com">
-          <b>Customer Support</b><span>Contact us by email →</span>
-        </a>
-        <a class="support-card" href="#faq">
-          <b>FAQ</b><span>Common launcher questions →</span>
-        </a>
-      </div>
-    </section>
-
-    <section id="faq" class="section faq">
-      <div class="section-head"><span>03</span><h2>FAQ</h2></div>
-      <details><summary>Is Frenzy Client free?</summary><p>Use the official release page for the current licensing and download information.</p></details>
-      <details><summary>Does it require a Microsoft account?</summary><p>Microsoft authentication is supported for legitimate Minecraft ownership and account access.</p></details>
-      <details><summary>Where do I get support?</summary><p>Use the Discord or support email shown above.</p></details>
-    </section>
-  </main>
-
-  <footer>
-    <div><strong>◆ FRENZY CLIENT</strong><br><span>Developed By- KrypticFrenz</span></div>
-    <div>© <span id="year"></span> Frenzy Client</div>
-  </footer>
-
-  <script>
-    const WINDOWS_DOWNLOAD_URL = "REPLACE_WITH_GITHUB_RELEASE_EXE_URL";
-    const downloadBtn = document.getElementById("downloadBtn");
-
-    if (WINDOWS_DOWNLOAD_URL.startsWith("http")) {
-      downloadBtn.href = WINDOWS_DOWNLOAD_URL;
-      downloadBtn.removeAttribute("aria-disabled");
-    } else {
-      downloadBtn.addEventListener("click", function(event) {
-        event.preventDefault();
-        alert("Frenzy Client Windows download will be available soon.");
-      });
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #08070b;
+      color: #f5f2fa;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::selection {
+      background: #ffffff;
+      color: #08070b;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =========================
+       BACKGROUND
+    ========================= */
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .035;
+      z-index: 100;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+    }
+
+    .glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: #8b35ff;
+      filter: blur(150px);
+      opacity: .09;
+      pointer-events: none;
+      top: -220px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 5vw;
+
+      background: rgba(8,7,11,.72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 5px;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+
+      border: 1px solid rgba(255,255,255,.35);
+      transform: rotate(45deg);
+      font-size: 11px;
+    }
+
+    .brand-mark span {
+      transform: rotate(-45deg);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+    }
+
+    .nav-links a {
+      color: #9d98a7;
+      font-size: 13px;
+      transition: .25s ease;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-download {
+      padding: 11px 17px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: #fff;
+      color: #09070d;
+      font-size: 12px;
+      font-weight: 800;
+      transition: .25s ease;
+    }
+
+    .nav-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 35px rgba(255,255,255,.12);
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 100vh;
+      padding: 170px 7vw 90px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      opacity: .08;
+      background-image:
+        linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px);
+      background-size: 70px 70px;
+
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+
+      width: fit-content;
+      margin-bottom: 25px;
+
+      color: #a8a1b4;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+
+      animation: fadeUp .8s ease both;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: #fff;
+    }
+
+    .hero h1 {
+      max-width: 1050px;
+
+      font-size: clamp(70px, 13vw, 190px);
+      line-height: .78;
+      letter-spacing: -8px;
+      font-weight: 950;
+
+      animation: heroIn 1s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,.55);
+    }
+
+    .hero-description {
+      max-width: 580px;
+      margin-top: 45px;
+
+      color: #aaa4b1;
+      font-size: 17px;
+      line-height: 1.7;
+
+      animation: fadeUp 1s .2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+
+      animation: fadeUp 1s .35s ease both;
+    }
+
+    .btn {
+      padding: 15px 22px;
+      border: 1px solid rgba(255,255,255,.2);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .4px;
+      transition: .3s ease;
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: #09070d;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.03);
+      color: #fff;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .scroll {
+      position: absolute;
+      bottom: 35px;
+      left: 7vw;
+
+      color: #625e69;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+
+      animation: pulse 2s infinite;
+    }
+
+    /* =========================
+       MARQUEE
+    ========================= */
+
+    .marquee {
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+
+      white-space: nowrap;
+      background: #0b0a0f;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      gap: 45px;
+      padding: 22px 0;
+
+      animation: marquee 25s linear infinite;
+    }
+
+    .marquee span {
+      color: #77717f;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .marquee strong {
+      color: #fff;
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    .section {
+      padding: 130px 7vw;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .section-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 30px;
+
+      margin-bottom: 70px;
+    }
+
+    .section-number {
+      color: #6d6874;
+      font-size: 11px;
+      letter-spacing: 3px;
+    }
+
+    .section-title {
+      max-width: 800px;
+
+      font-size: clamp(42px, 6vw, 82px);
+      line-height: .95;
+      letter-spacing: -4px;
+    }
+
+    .section-subtitle {
+      max-width: 430px;
+
+      color: #89838f;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       FEATURES
+    ========================= */
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid rgba(255,255,255,.1);
+      border-left: 1px solid rgba(255,255,255,.1);
+    }
+
+    .feature {
+      min-height: 280px;
+      padding: 38px;
+
+      border-right: 1px solid rgba(255,255,255,.1);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+
+      position: relative;
+      overflow: hidden;
+
+      transition: .4s ease;
+    }
+
+    .feature::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -90px;
+      bottom: -90px;
+
+      border-radius: 50%;
+      background: #8b35ff;
+      filter: blur(70px);
+      opacity: 0;
+
+      transition: .5s ease;
+    }
+
+    .feature:hover {
+      background: rgba(255,255,255,.025);
+    }
+
+    .feature:hover::after {
+      opacity: .2;
+    }
+
+    .feature-number {
+      color: #625d69;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    .feature h3 {
+      margin-top: 70px;
+
+      font-size: 28px;
+      letter-spacing: -1px;
+    }
+
+    .feature p {
+      max-width: 480px;
+      margin-top: 14px;
+
+      color: #85808b;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       LAUNCHER PREVIEW
+    ========================= */
+
+    .launcher-wrap {
+      margin-top: 70px;
+      padding: 1px;
+
+      background: linear-gradient(
+        120deg,
+        rgba(255,255,255,.2),
+        rgba(255,255,255,.03),
+        rgba(139,53,255,.25)
+      );
+
+      box-shadow: 0 40px 120px rgba(0,0,0,.5);
+    }
+
+    .launcher {
+      min-height: 500px;
+      background: #0c0b10;
+
+      display: grid;
+      grid-template-columns: 190px 1fr;
+    }
+
+    .launcher-sidebar {
+      padding: 28px 18px;
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+
+    .launcher-logo {
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      margin-bottom: 45px;
+    }
+
+    .launcher-nav-item {
+      padding: 12px 10px;
+      margin-bottom: 5px;
+
+      color: #77717e;
+      font-size: 12px;
+    }
+
+    .launcher-nav-item.active {
+      color: #fff;
+      background: rgba(255,255,255,.06);
+    }
+
+    .launcher-main {
+      padding: 45px;
+    }
+
+    .launcher-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .launcher-small {
+      color: #6f6975;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    .account {
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.1);
+      color: #aaa3af;
+      font-size: 11px;
+    }
+
+    .instance {
+      margin-top: 45px;
+      padding: 30px;
+
+      border: 1px solid rgba(255,255,255,.1);
+      background: linear-gradient(
+        135deg,
+        rgba(255,255,255,.04),
+        rgba(139,53,255,.04)
+      );
+    }
+
+    .instance-label {
+      color: #756f7b;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .instance h3 {
+      margin-top: 12px;
+      font-size: 32px;
+    }
+
+    .instance-info {
+      margin-top: 10px;
+      color: #77717e;
+      font-size: 12px;
+    }
+
+    .progress {
+      height: 2px;
+      margin-top: 35px;
+      background: #29252e;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 68%;
+      background: #fff;
+
+      animation: progress 3s ease-in-out infinite alternate;
+    }
+
+    .launch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .launch-button {
+      padding: 14px 22px;
+      background: #fff;
+      color: #09070d;
+
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .status {
+      color: #77717e;
+      font-size: 11px;
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(255,255,255,.1);
+      border-left: 1px solid rgba(255,255,255,.1);
+    }
+
+    .stat {
+      padding: 38px;
+      border-right: 1px solid rgba(255,255,255,.1);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 46px;
+      letter-spacing: -3px;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: #77717e;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* =========================
+       SUPPORT
+    ========================= */
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .support-card {
+      padding: 30px;
+      min-height: 150px;
+
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.015);
+
+      transition: .3s ease;
+    }
+
+    .support-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,.035);
+    }
+
+    .support-card b {
+      display: block;
+      font-size: 19px;
+    }
+
+    .support-card span {
+      display: block;
+      margin-top: 12px;
+      color: #77717e;
+      font-size: 13px;
+    }
+
+    /* =========================
+       FAQ
+    ========================= */
+
+    .faq {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    details {
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding: 25px 0;
+    }
+
+    details:last-child {
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    summary {
+      cursor: pointer;
+      list-style: none;
+
+      display: flex;
+      justify-content: space-between;
+
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    summary::after {
+      content: "+";
+      color: #77717e;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    details p {
+      max-width: 700px;
+      margin-top: 18px;
+
+      color: #817b87;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: "";
+      position: absolute;
+
+      width: 600px;
+      height: 600px;
+
+      border-radius: 50%;
+      background: #7d2cff;
+      filter: blur(180px);
+      opacity: .12;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta h2 {
+      font-size: clamp(55px, 10vw, 130px);
+      line-height: .8;
+      letter-spacing: -7px;
+    }
+
+    .cta p {
+      max-width: 500px;
+      margin: 35px auto;
+
+      color: #8a8490;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 45px 7vw;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+
+      color: #68626e;
+      font-size: 11px;
+
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .footer-brand {
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+
+    /* =========================
+       ANIMATIONS
+    ========================= */
+
+    @keyframes heroIn {
+      from {
+        opacity: 0;
+        transform: translateY(60px);
+        filter: blur(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @keyframes progress {
+      from {
+        width: 35%;
+      }
+      to {
+        width: 90%;
+      }
+    }
+
+    @keyframes pulse {
+      0%,100% {
+        opacity: .4;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .nav {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 145px 22px 90px;
+      }
+
+      .hero h1 {
+        font-size: clamp(65px, 21vw, 110px);
+        letter-spacing: -5px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .section {
+        padding: 90px 22px;
+      }
+
+      .section-top {
+        display: block;
+      }
+
+      .section-subtitle {
+        margin-top: 25px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .feature {
+        min-height: 240px;
+      }
+
+      .launcher {
+        grid-template-columns: 1fr;
+      }
+
+      .launcher-sidebar {
+        display: none;
+      }
+
+      .launcher-main {
+        padding: 25px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat {
+        padding: 25px;
+      }
+
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta h2 {
+        letter-spacing: -4px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+
+      .scroll {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="noise"></div>
+<div class="glow"></div>
+
+<!-- NAVIGATION -->
+<header class="nav">
+
+  <a class="brand" href="#home">
+    <span class="brand-mark"><span>◆</span></span>
+    FRENZY
+  </a>
+
+  <nav class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#launcher">Launcher</a>
+    <a href="#support">Support</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+
+  <a class="nav-download" href="#download">
+    DOWNLOAD
+  </a>
+
+</header>
+
+
+<main id="home">
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-grid"></div>
+
+    <div class="eyebrow">
+      MINECRAFT JAVA • FRENZY CLIENT
+    </div>
+
+    <h1>
+      PLAY
+      <span>FRENZY.</span>
+    </h1>
+
+    <p class="hero-description">
+      A modern Minecraft Java launcher and client built for
+      performance, customization and a clean gaming experience.
+    </p>
+
+    <div class="hero-actions">
+
+      <a class="btn btn-primary" href="#download">
+        DOWNLOAD FRENZY
+      </a>
+
+      <a class="btn btn-secondary" href="#features">
+        EXPLORE FEATURES
+      </a>
+
+    </div>
+
+    <div class="scroll">
+      SCROLL TO EXPLORE ↓
+    </div>
+
+  </section>
+
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+
+    <div class="marquee-track">
+
+      <span><strong>Frenzy Client</strong></span>
+      <span>Modern Launcher</span>
+      <span>Minecraft Java</span>
+      <span>Performance</span>
+      <span>Customization</span>
+      <span>PvP Ready</span>
+      <span>Frenzy Client</span>
+      <span>Modern Launcher</span>
+      <span>Minecraft Java</span>
+      <span>Performance</span>
+      <span>Customization</span>
+      <span>PvP Ready</span>
+
+    </div>
+
+  </div>
+
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+
+    <div class="section-top">
+
+      <div class="section-number">
+        01 / FEATURES
+      </div>
+
+      <h2 class="section-title">
+        Everything you need.
+      </h2>
+
+      <p class="section-subtitle">
+        Frenzy brings your launcher, client experience,
+        customization and Minecraft tools together in one
+        modern interface.
+      </p>
+
+    </div>
+
+
+    <div class="features">
+
+      <article class="feature">
+        <div class="feature-number">01 — LAUNCHER</div>
+        <h3>Fast Launcher</h3>
+        <p>
+          A clean launcher interface designed to keep
+          Minecraft launching simple and distraction-free.
+        </p>
+      </article>
+
+
+      <article class="feature">
+        <div class="feature-number">02 — MODS</div>
+        <h3>Mod Management</h3>
+        <p>
+          Organize compatible client components and
+          mods from one place.
+        </p>
+      </article>
+
+
+      <article class="feature">
+        <div class="feature-number">03 — PERFORMANCE</div>
+        <h3>Performance Focus</h3>
+        <p>
+          Built around a lightweight experience so you
+          can focus on the game.
+        </p>
+      </article>
+
+
+      <article class="feature">
+        <div class="feature-number">04 — PVP</div>
+        <h3>PvP Experience</h3>
+        <p>
+          A clean visual experience made with Minecraft
+          PvP players in mind.
+        </p>
+      </article>
+
+
+      <article class="feature">
+        <div class="feature-number">05 — ACCOUNT</div>
+        <h3>Microsoft Login</h3>
+        <p>
+          Official Microsoft authentication support can
+          be connected for legitimate Minecraft accounts.
+        </p>
+      </article>
+
+
+      <article class="feature">
+        <div class="feature-number">06 — UPDATES</div>
+        <h3>Secure Updates</h3>
+        <p>
+          Release and update infrastructure designed to
+          keep the launcher maintainable.
+        </p>
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- LAUNCHER -->
+  <section class="section" id="launcher">
+
+    <div class="section-top">
+
+      <div class="section-number">
+        02 / LAUNCHER
+      </div>
+      
