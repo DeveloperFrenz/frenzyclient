@@ -1,1175 +1,1663 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/png" href="favicon.png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="theme-color" content="#08050f">
-<meta name="description" content="Frenzy Client - Modern Minecraft Java & Bedrock Launcher and PvP Resource Pack">
-
-<title>Frenzy Client — Minecraft Java & Bedrock</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:
-    radial-gradient(circle at 15% 10%,rgba(150,50,255,.20),transparent 30%),
-    radial-gradient(circle at 85% 20%,rgba(0,220,255,.08),transparent 28%),
-    #08050f;
-    color:#fff;
-    line-height:1.6;
-    overflow-x:hidden;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-.container{
-    width:min(1120px,92%);
-    margin:auto;
-}
-
-/* NAVBAR */
-
-header{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:rgba(8,5,15,.85);
-    backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.07);
-}
-
-.nav{
-    min-height:72px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo{
-    font-size:24px;
-    font-weight:900;
-    letter-spacing:1px;
-}
-
-.logo span{
-    color:#a855f7;
-}
-
-nav{
-    display:flex;
-    gap:25px;
-    color:#aaa2b5;
-    font-size:14px;
-}
-
-nav a:hover{
-    color:white;
-}
-
-.nav-download{
-    padding:10px 17px;
-    border-radius:10px;
-    background:linear-gradient(135deg,#9339ed,#6320bd);
-    font-weight:bold;
-}
-
-/* HERO */
-
-.hero{
-    min-height:720px;
-    display:flex;
-    align-items:center;
-    text-align:center;
-}
-
-.hero-content{
-    width:100%;
-    padding:90px 0;
-}
-
-.badge{
-    display:inline-block;
-    padding:7px 14px;
-    border-radius:50px;
-    border:1px solid rgba(168,85,247,.35);
-    background:rgba(168,85,247,.08);
-    color:#d7b4ff;
-    font-size:12px;
-    font-weight:bold;
-    letter-spacing:1px;
-    margin-bottom:25px;
-}
-
-h1{
-    font-size:clamp(48px,8vw,94px);
-    line-height:.95;
-    letter-spacing:-4px;
-    margin-bottom:25px;
-
-    background:linear-gradient(
-        90deg,
-        #ffffff,
-        #b66cff,
-        #75eaff
-    );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-}
-
-.hero-text{
-    max-width:680px;
-    margin:auto;
-    color:#aaa2b6;
-    font-size:18px;
-}
-
-.buttons{
-    margin-top:35px;
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:13px;
-}
-
-.btn{
-    display:inline-flex;
-    justify-content:center;
-    align-items:center;
-    min-width:180px;
-    padding:14px 22px;
-    border-radius:12px;
-    font-weight:800;
-    border:1px solid rgba(255,255,255,.10);
-    transition:.2s;
-}
-
-.btn:hover{
-    transform:translateY(-3px);
-}
-
-.btn-purple{
-    background:linear-gradient(135deg,#9339ed,#6320bd);
-    box-shadow:0 12px 35px rgba(128,45,220,.25);
-}
-
-.btn-dark{
-    background:rgba(255,255,255,.04);
-}
-
-/* PVP BUTTON */
-
-.pvp-button{
-    width:min(520px,92%);
-    margin:26px auto 0;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-
-    padding:17px 22px;
-
-    border-radius:14px;
-
-    border:1px solid rgba(0,225,255,.25);
-
-    background:
-    linear-gradient(
-        135deg,
-        rgba(132,40,225,.20),
-        rgba(0,200,255,.08)
-    );
-
-    font-weight:900;
-
-    transition:.2s;
-}
-
-.pvp-button:hover{
-    transform:translateY(-3px);
-    border-color:rgba(0,225,255,.5);
-}
-
-.pvp-icon{
-    color:#74eaff;
-}
-
-/* INFO */
-
-.info-row{
-    margin-top:45px;
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-}
-
-.info{
-    padding:8px 14px;
-    border-radius:50px;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.07);
-    color:#aaa2b6;
-    font-size:12px;
-}
-
-/* SECTIONS */
-
-.section{
-    padding:105px 0;
-    border-top:1px solid rgba(255,255,255,.06);
-}
-
-.section-number{
-    color:#a855f7;
-    font-size:12px;
-    font-weight:900;
-    letter-spacing:2px;
-    margin-bottom:12px;
-}
-
-.section-title{
-    font-size:clamp(34px,5vw,58px);
-    line-height:1.05;
-    margin-bottom:15px;
-}
-
-.section-description{
-    max-width:700px;
-    color:#aaa2b6;
-    margin-bottom:35px;
-}
-
-/* FEATURES */
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:16px;
-}
-
-.card{
-    padding:27px;
-    min-height:180px;
-    border-radius:18px;
-
-    background:
-    linear-gradient(
-        145deg,
-        rgba(255,255,255,.055),
-        rgba(255,255,255,.018)
-    );
-
-    border:1px solid rgba(255,255,255,.08);
-
-    transition:.2s;
-}
-
-.card:hover{
-    transform:translateY(-4px);
-    border-color:rgba(168,85,247,.3);
-}
-
-.card-icon{
-    font-size:25px;
-    color:#b66dff;
-    margin-bottom:17px;
-}
-
-.card h3{
-    margin-bottom:8px;
-}
-
-.card p{
-    color:#938b9e;
-    font-size:14px;
-}
-
-/* LAUNCHER */
-
-.launcher-preview{
-    border:1px solid rgba(168,85,247,.22);
-    border-radius:22px;
-    padding:18px;
-    background:#0d0915;
-    box-shadow:0 25px 80px rgba(0,0,0,.3);
-}
-
-.preview-top{
-    height:38px;
-    display:flex;
-    align-items:center;
-    gap:7px;
-    padding:0 10px;
-    border-bottom:1px solid rgba(255,255,255,.07);
-}
-
-.dot{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:#6e6478;
-}
-
-.preview-body{
-    min-height:330px;
-    display:grid;
-    grid-template-columns:190px 1fr;
-}
-
-.preview-side{
-    padding:24px 15px;
-    border-right:1px solid rgba(255,255,255,.07);
-    color:#837b8d;
-}
-
-.preview-side strong{
-    display:block;
-    color:#b96cff;
-    margin-bottom:25px;
-}
-
-.preview-side div{
-    padding:10px;
-}
-
-.preview-main{
-    padding:35px;
-}
-
-.preview-main h3{
-    font-size:30px;
-    margin-bottom:8px;
-}
-
-.preview-main p{
-    color:#8f8798;
-    max-width:560px;
-}
-
-.preview-button{
-    display:inline-block;
-    margin-top:28px;
-    padding:13px 20px;
-    border-radius:10px;
-    background:#7930d0;
-    font-weight:bold;
-}
-
-/* DOWNLOAD */
-
-.download-box{
-    display:grid;
-    grid-template-columns:1.4fr .6fr;
-    gap:18px;
-}
-
-.download-main,
-.support-box{
-    padding:32px;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:20px;
-    background:rgba(255,255,255,.035);
-}
-
-.download-main h3{
-    font-size:27px;
-    margin-bottom:8px;
-}
-
-.download-main p,
-.support-box p{
-    color:#968e9e;
-    margin-bottom:25px;
-}
-
-.status{
-    color:#72eaff;
-    font-size:12px;
-    margin-left:7px;
-}
-
-/* SUPPORT */
-
-.support-links{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-}
-
-.support-link{
-    display:inline-block;
-    padding:12px 17px;
-    border-radius:10px;
-
-    background:rgba(168,85,247,.10);
-    border:1px solid rgba(168,85,247,.18);
-
-    color:#d7b9f4;
-    font-weight:700;
-
-    transition:.2s;
-}
-
-.support-link:hover{
-    transform:translateY(-2px);
-    border-color:rgba(168,85,247,.4);
-}
-
-/* FAQ */
-
-details{
-    padding:20px 0;
-    border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-summary{
-    cursor:pointer;
-    font-weight:800;
-}
-
-details p{
-    color:#948b9c;
-    padding-top:12px;
-    max-width:750px;
-}
-
-/* FOOTER */
-
-footer{
-    padding:55px 0;
-    border-top:1px solid rgba(255,255,255,.07);
-    color:#827a8b;
-}
-
-.footer-inner{
-    display:flex;
-    justify-content:space-between;
-    gap:25px;
-    flex-wrap:wrap;
-}
-
-.footer-brand{
-    color:#fff;
-    font-size:20px;
-    font-weight:900;
-}
-
-.footer-brand span{
-    color:#a855f7;
-}
-
-.footer-links{
-    display:flex;
-    flex-wrap:wrap;
-    gap:17px;
-}
-
-.footer-links a:hover{
-    color:white;
-}
-
-.copyright{
-    margin-top:25px;
-    font-size:12px;
-}
-
-/* MOBILE */
-
-@media(max-width:800px){
-
-    nav{
-        display:none;
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Frenzy Client — Free Minecraft Launcher for Windows</title>
+
+  <meta
+    name="description"
+    content="Frenzy Client is a free Minecraft launcher for Windows developed by Reyansh Raghuvanshi, focused on performance, FPS optimization, PvP and a modern Minecraft experience."
+  >
+
+  <meta
+    name="keywords"
+    content="Frenzy Client, Minecraft launcher, free Minecraft launcher, Minecraft FPS booster, Minecraft PvP launcher, Minecraft Java launcher, Minecraft Windows launcher"
+  >
+
+  <meta name="author" content="Reyansh Raghuvanshi">
+
+  <meta name="theme-color" content="#08050f">
+
+  <link
+    rel="canonical"
+    href="https://developerfrenz.github.io/frenzyclient/"
+  >
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+
+  <meta
+    property="og:title"
+    content="Frenzy Client — Free Minecraft Launcher"
+  >
+
+  <meta
+    property="og:description"
+    content="Frenzy Client is a free Minecraft launcher for Windows developed by Reyansh Raghuvanshi."
+  >
+
+  <meta
+    property="og:url"
+    content="https://developerfrenz.github.io/frenzyclient/"
+  >
+
+  <meta
+    property="og:image"
+    content="https://developerfrenz.github.io/frenzyclient/favicon.png"
+  >
+
+  <meta
+    property="og:site_name"
+    content="Frenzy Client"
+  >
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary">
+
+  <meta
+    name="twitter:title"
+    content="Frenzy Client — Free Minecraft Launcher"
+  >
+
+  <meta
+    name="twitter:description"
+    content="Free Minecraft launcher for Windows developed by Reyansh Raghuvanshi."
+  >
+
+  <meta
+    name="twitter:image"
+    content="https://developerfrenz.github.io/frenzyclient/favicon.png"
+  >
+
+  <!--
+    GOOGLE STRUCTURED DATA
+    Helps search engines understand what Frenzy Client is.
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+
+      {
+        "@type": "Organization",
+        "@id": "https://developerfrenz.github.io/frenzyclient/#organization",
+        "name": "Frenzy Client",
+        "alternateName": "Frenzy",
+        "url": "https://developerfrenz.github.io/frenzyclient/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://developerfrenz.github.io/frenzyclient/favicon.png"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "Reyansh Raghuvanshi"
+        },
+        "sameAs": [
+          "https://github.com/DeveloperFrenz/frenzyclient",
+          "https://discord.gg/SvzQt36jrU"
+        ]
+      },
+
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://developerfrenz.github.io/frenzyclient/#software",
+        "name": "Frenzy Client",
+        "alternateName": "Frenzy Client Minecraft Launcher",
+        "description": "Free Minecraft launcher for Windows developed by Reyansh Raghuvanshi, focused on performance, FPS optimization, PvP and a modern Minecraft experience.",
+        "url": "https://developerfrenz.github.io/frenzyclient/",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Windows",
+        "author": {
+          "@type": "Person",
+          "name": "Reyansh Raghuvanshi"
+        },
+        "publisher": {
+          "@id": "https://developerfrenz.github.io/frenzyclient/#organization"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+
+    ]
+  }
+  </script>
+
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .grid,
-    .download-box{
-        grid-template-columns:1fr;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .preview-body{
-        grid-template-columns:1fr;
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(
+          circle at 15% 10%,
+          rgba(150, 50, 255, 0.20),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(0, 220, 255, 0.08),
+          transparent 28%
+        ),
+        #08050f;
+
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    .preview-side{
-        display:none;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    .hero{
-        min-height:650px;
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
     }
 
-    h1{
-        letter-spacing:-2px;
-    }
-}
 
-</style>
+    /* NAVBAR */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      background: rgba(8, 5, 15, 0.85);
+
+      backdrop-filter: blur(18px);
+
+      border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .nav {
+      min-height: 72px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #a855f7;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+
+      color: #aaa2b5;
+
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    .nav-download {
+      padding: 10px 17px;
+
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #9339ed,
+          #6320bd
+        );
+
+      font-weight: bold;
+    }
+
+
+    /* HERO */
+
+    .hero {
+      min-height: 720px;
+
+      display: flex;
+      align-items: center;
+
+      text-align: center;
+    }
+
+    .hero-content {
+      width: 100%;
+      padding: 90px 0;
+    }
+
+    .badge {
+      display: inline-block;
+
+      padding: 7px 14px;
+
+      border-radius: 50px;
+
+      border:
+        1px solid rgba(168, 85, 247, 0.35);
+
+      background:
+        rgba(168, 85, 247, 0.08);
+
+      color: #d7b4ff;
+
+      font-size: 12px;
+      font-weight: bold;
+
+      letter-spacing: 1px;
+
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: clamp(48px, 8vw, 94px);
+
+      line-height: 0.95;
+
+      letter-spacing: -4px;
+
+      margin-bottom: 25px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffffff,
+          #b66cff,
+          #75eaff
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+    }
+
+    .hero-text {
+      max-width: 720px;
+
+      margin: auto;
+
+      color: #aaa2b6;
+
+      font-size: 18px;
+    }
+
+    .buttons {
+      margin-top: 35px;
+
+      display: flex;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 13px;
+    }
+
+    .btn {
+      display: inline-flex;
+
+      justify-content: center;
+      align-items: center;
+
+      min-width: 180px;
+
+      padding: 14px 22px;
+
+      border-radius: 12px;
+
+      font-weight: 800;
+
+      border:
+        1px solid rgba(255, 255, 255, 0.10);
+
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .btn-purple {
+      background:
+        linear-gradient(
+          135deg,
+          #9339ed,
+          #6320bd
+        );
+
+      box-shadow:
+        0 12px 35px rgba(128, 45, 220, 0.25);
+    }
+
+    .btn-dark {
+      background:
+        rgba(255, 255, 255, 0.04);
+    }
+
+
+    /* PVP / BEDROCK BUTTON */
+
+    .pvp-button {
+      width: min(560px, 92%);
+
+      margin: 26px auto 0;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 12px;
+
+      padding: 17px 22px;
+
+      border-radius: 14px;
+
+      border:
+        1px solid rgba(0, 225, 255, 0.25);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(132, 40, 225, 0.20),
+          rgba(0, 200, 255, 0.08)
+        );
+
+      font-weight: 900;
+
+      transition: 0.2s;
+    }
+
+    .pvp-button:hover {
+      transform: translateY(-3px);
+
+      border-color:
+        rgba(0, 225, 255, 0.5);
+    }
+
+    .pvp-icon {
+      color: #74eaff;
+    }
+
+
+    /* INFO */
+
+    .info-row {
+      margin-top: 45px;
+
+      display: flex;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 10px;
+    }
+
+    .info {
+      padding: 8px 14px;
+
+      border-radius: 50px;
+
+      background:
+        rgba(255, 255, 255, 0.04);
+
+      border:
+        1px solid rgba(255, 255, 255, 0.07);
+
+      color: #aaa2b6;
+
+      font-size: 12px;
+    }
+
+
+    /* SECTIONS */
+
+    .section {
+      padding: 105px 0;
+
+      border-top:
+        1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .section-number {
+      color: #a855f7;
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 5vw, 58px);
+
+      line-height: 1.05;
+
+      margin-bottom: 15px;
+    }
+
+    .section-description {
+      max-width: 700px;
+
+      color: #aaa2b6;
+
+      margin-bottom: 35px;
+    }
+
+
+    /* FEATURES */
+
+    .grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 16px;
+    }
+
+    .card {
+      padding: 27px;
+
+      min-height: 180px;
+
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.055),
+          rgba(255, 255, 255, 0.018)
+        );
+
+      border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+
+      border-color:
+        rgba(168, 85, 247, 0.3);
+    }
+
+    .card-icon {
+      font-size: 25px;
+
+      color: #b66dff;
+
+      margin-bottom: 17px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #938b9e;
+
+      font-size: 14px;
+    }
+
+
+    /* LAUNCHER */
+
+    .launcher-preview {
+      border:
+        1px solid rgba(168, 85, 247, 0.22);
+
+      border-radius: 22px;
+
+      padding: 18px;
+
+      background: #0d0915;
+
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.3);
+    }
+
+    .preview-top {
+      height: 38px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      padding: 0 10px;
+
+      border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: #6e6478;
+    }
+
+    .preview-body {
+      min-height: 330px;
+
+      display: grid;
+
+      grid-template-columns:
+        190px 1fr;
+    }
+
+    .preview-side {
+      padding: 24px 15px;
+
+      border-right:
+        1px solid rgba(255, 255, 255, 0.07);
+
+      color: #837b8d;
+    }
+
+    .preview-side strong {
+      display: block;
+
+      color: #b96cff;
+
+      margin-bottom: 25px;
+    }
+
+    .preview-side div {
+      padding: 10px;
+    }
+
+    .preview-main {
+      padding: 35px;
+    }
+
+    .preview-main h3 {
+      font-size: 30px;
+
+      margin-bottom: 8px;
+    }
+
+    .preview-main p {
+      color: #8f8798;
+
+      max-width: 560px;
+    }
+
+    .preview-button {
+      display: inline-block;
+
+      margin-top: 28px;
+
+      padding: 13px 20px;
+
+      border-radius: 10px;
+
+      background: #7930d0;
+
+      font-weight: bold;
+    }
+
+
+    /* DOWNLOAD */
+
+    .download-box {
+      display: grid;
+
+      grid-template-columns:
+        1.4fr 0.6fr;
+
+      gap: 18px;
+    }
+
+    .download-main,
+    .support-box {
+      padding: 32px;
+
+      border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+      border-radius: 20px;
+
+      background:
+        rgba(255, 255, 255, 0.035);
+    }
+
+    .download-main h3 {
+      font-size: 27px;
+
+      margin-bottom: 8px;
+    }
+
+    .download-main p,
+    .support-box p {
+      color: #968e9e;
+
+      margin-bottom: 25px;
+    }
+
+    .status {
+      color: #72eaff;
+
+      font-size: 12px;
+
+      margin-left: 7px;
+    }
+
+
+    /* SUPPORT */
+
+    .support-links {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 12px;
+    }
+
+    .support-link {
+      display: inline-block;
+
+      padding: 12px 17px;
+
+      border-radius: 10px;
+
+      background:
+        rgba(168, 85, 247, 0.10);
+
+      border:
+        1px solid rgba(168, 85, 247, 0.18);
+
+      color: #d7b9f4;
+
+      font-weight: 700;
+
+      transition: 0.2s;
+    }
+
+    .support-link:hover {
+      transform: translateY(-2px);
+
+      border-color:
+        rgba(168, 85, 247, 0.4);
+    }
+
+
+    /* FAQ */
+
+    details {
+      padding: 20px 0;
+
+      border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    summary {
+      cursor: pointer;
+
+      font-weight: 800;
+    }
+
+    details p {
+      color: #948b9c;
+
+      padding-top: 12px;
+
+      max-width: 750px;
+    }
+
+
+    /* FOOTER */
+
+    footer {
+      padding: 55px 0;
+
+      border-top:
+        1px solid rgba(255, 255, 255, 0.07);
+
+      color: #827a8b;
+    }
+
+    .footer-inner {
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 25px;
+
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      color: #ffffff;
+
+      font-size: 20px;
+
+      font-weight: 900;
+    }
+
+    .footer-brand span {
+      color: #a855f7;
+    }
+
+    .footer-links {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 17px;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+    }
+
+    .copyright {
+      margin-top: 25px;
+
+      font-size: 12px;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+
+      nav {
+        display: none;
+      }
+
+      .grid,
+      .download-box {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-body {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-side {
+        display: none;
+      }
+
+      .hero {
+        min-height: 650px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+    }
+
+  </style>
+
 </head>
+
 
 <body>
 
-<!-- NAVBAR -->
 
-<header>
+  <!-- NAVBAR -->
 
-<div class="container nav">
+  <header>
 
-<a href="#home" class="logo">
-FRENZY<span>.</span>
-</a>
+    <div class="container nav">
 
-<nav>
-<a href="#features">Features</a>
-<a href="#launcher">Launcher</a>
-<a href="#download">Download</a>
-<a href="#support">Support</a>
-<a href="#faq">FAQ</a>
-</nav>
+      <a href="#home" class="logo">
+        FRENZY<span>.</span>
+      </a>
 
-<a
-href="https://drive.google.com/uc?export=download&id=1b72M_7RGhSa01XxmbXL5pVFvpfNr8ZID"
-target="_blank"
-rel="noopener noreferrer"
-class="nav-download"
->
-Download
-</a>
+      <nav>
 
-</div>
+        <a href="#features">
+          Features
+        </a>
 
-</header>
+        <a href="#launcher">
+          Launcher
+        </a>
 
+        <a href="#download">
+          Download
+        </a>
 
-<main>
+        <a href="#support">
+          Support
+        </a>
 
-<!-- HERO -->
+        <a href="#faq">
+          FAQ
+        </a>
 
-<section class="hero" id="home">
+      </nav>
 
-<div class="container hero-content">
+      <a
+        href="https://drive.google.com/uc?export=download&id=1b72M_7RGhSa01XxmbXL5pVFvpfNr8ZID"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="nav-download"
+      >
+        Download
+      </a>
 
-<div class="badge">
-● MINECRAFT JAVA ● MINECRAFT BEDROCK FOR WINDOWS • FRENZY CLIENT
-</div>
+    </div>
 
-<h1>
-PLAY SMARTER.<br>
-PLAY FRENZY.
-</h1>
+  </header>
 
-<p class="hero-text">
-A modern Minecraft Java * Bedrock launcher for windows focused on a clean interface,
-fast access, mod management and PvP-ready gameplay.
-</p>
 
-<div class="buttons">
+  <main>
 
-<a
-href="https://drive.google.com/uc?export=download&id=1b72M_7RGhSa01XxmbXL5pVFvpfNr8ZID"
-target="_blank"
-rel="noopener noreferrer"
-class="btn btn-purple"
->
-Download Java Edition for Windows
-</a>
 
-<a
-href="#features"
-class="btn btn-dark"
->
-Explore Features
-</a>
+    <!-- HERO -->
 
-</div>
+    <section class="hero" id="home">
 
+      <div class="container hero-content">
 
-<!-- PVP DOWNLOAD -->
+        <div class="badge">
+          ● FREE MINECRAFT LAUNCHER ● WINDOWS ● FRENZY CLIENT
+        </div>
 
-<a
-href="https://drive.google.com/file/d/1fY6oQ-V5PKpaZkCDtVdaU2TMEzeo9X2E/view?usp=sharing"
-target="_blank"
-rel="noopener noreferrer"
-class="pvp-button"
->
+        <h1>
+          PLAY SMARTER.<br>
+          PLAY FRENZY.
+        </h1>
 
-<span class="pvp-icon">◆</span>
+        <p class="hero-text">
+          <strong>Frenzy Client</strong> is a free Minecraft launcher
+          for Windows developed by
+          <strong>Reyansh Raghuvanshi</strong>,
+          focused on performance, FPS optimization,
+          PvP and a modern Minecraft experience.
+        </p>
 
-Download Frenzy Client Bedrock Edition For Windows
+        <div class="buttons">
 
-</a>
+          <a
+            href="https://drive.google.com/uc?export=download&id=1b72M_7RGhSa01XxmbXL5pVFvpfNr8ZID"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-purple"
+          >
+            Download Frenzy Client
+          </a>
 
+          <a
+            href="#features"
+            class="btn btn-dark"
+          >
+            Explore Features
+          </a>
 
-<div class="info-row">
+        </div>
 
-<span class="info">Minecraft Java for windows</span>
-<span class="info">Minecraft Bedrock for windows</span>
-<span class="info">Modern UI</span>
-<span class="info">PvP Ready</span>
-<span class="info">Windows only</span>
 
-</div>
+        <!-- BEDROCK -->
 
-</div>
+        <a
+          href="https://drive.google.com/file/d/1fY6oQ-V5PKpaZkCDtVdaU2TMEzeo9X2E/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="pvp-button"
+        >
+          <span class="pvp-icon">◆</span>
 
-</section>
+          Download Frenzy Client Bedrock Edition for Windows
 
+        </a>
 
-<!-- FEATURES -->
 
-<section class="section" id="features">
+        <div class="info-row">
 
-<div class="container">
+          <span class="info">
+            Free Minecraft Launcher
+          </span>
 
-<div class="section-number">
-01 / FEATURES
-</div>
+          <span class="info">
+            Windows
+          </span>
 
-<h2 class="section-title">
-Built for your Minecraft setup.
-</h2>
+          <span class="info">
+            FPS Focused
+          </span>
 
-<p class="section-description">
-Frenzy Client brings important launcher tools together
-in one modern experience.
-</p>
+          <span class="info">
+            PvP Ready
+          </span>
 
+          <span class="info">
+            Modern UI
+          </span>
 
-<div class="grid">
+        </div>
 
-<div class="card">
-<div class="card-icon">⚡</div>
-<h3>Fast Launcher</h3>
-<p>
-Quick access to your Minecraft installations and profiles.
-</p>
-</div>
+      </div>
 
+    </section>
 
-<div class="card">
-<div class="card-icon">◈</div>
-<h3>Modern Interface</h3>
-<p>
-Dark purple styling with a clean and simple launcher layout.
-</p>
-</div>
 
+    <!-- FEATURES -->
 
-<div class="card">
-<div class="card-icon">▣</div>
-<h3>Mod Management</h3>
-<p>
-Manage supported Minecraft mods and installations from one place.
-</p>
-</div>
+    <section class="section" id="features">
 
+      <div class="container">
 
-<div class="card">
-<div class="card-icon">⌁</div>
-<h3>Performance Focus</h3>
-<p>
-Designed around a lightweight and responsive launcher experience.
-</p>
-</div>
+        <div class="section-number">
+          01 / FEATURES
+        </div>
 
+        <h2 class="section-title">
+          Built for your Minecraft setup.
+        </h2>
 
-<div class="card">
-<div class="card-icon">◆</div>
-<h3>PvP Ready</h3>
-<p>
-Download the official Frenzy PvP resource pack directly from this website.
-</p>
-</div>
+        <p class="section-description">
+          Frenzy Client brings important Minecraft launcher
+          tools together in one modern Windows experience.
+        </p>
 
 
-<div class="card">
-<div class="card-icon">⚙</div>
-<h3>Diagnostics</h3>
-<p>
-Useful launcher information for troubleshooting your setup.
-</p>
-</div>
+        <div class="grid">
 
-</div>
 
-</div>
+          <div class="card">
 
-</section>
+            <div class="card-icon">
+              ⚡
+            </div>
 
+            <h3>
+              Performance Focus
+            </h3>
 
-<!-- LAUNCHER -->
+            <p>
+              Designed around a lightweight and responsive
+              Minecraft launcher experience.
+            </p>
 
-<section class="section" id="launcher">
+          </div>
 
-<div class="container">
 
-<div class="section-number">
-02 / LAUNCHER
-</div>
+          <div class="card">
 
-<h2 class="section-title">
-Your Minecraft. One launcher.
-</h2>
+            <div class="card-icon">
+              ◈
+            </div>
 
-<p class="section-description">
-A clean launcher experience made for players who want
-their Minecraft setup organized and easy to access.
-</p>
+            <h3>
+              Modern Interface
+            </h3>
 
+            <p>
+              Dark purple styling with a clean and simple
+              launcher layout.
+            </p>
 
-<div class="launcher-preview">
+          </div>
 
-<div class="preview-top">
 
-<span class="dot"></span>
-<span class="dot"></span>
-<span class="dot"></span>
+          <div class="card">
 
-</div>
+            <div class="card-icon">
+              ▣
+            </div>
 
+            <h3>
+              Mod Management
+            </h3>
 
-<div class="preview-body">
+            <p>
+              Manage supported Minecraft mods and
+              installations from one place.
+            </p>
 
-<div class="preview-side">
+          </div>
 
-<strong>FRENZY</strong>
 
-<div>Home</div>
-<div>Instances</div>
-<div>Mods</div>
-<div>Settings</div>
+          <div class="card">
 
-</div>
+            <div class="card-icon">
+              ⚙
+            </div>
 
+            <h3>
+              Minecraft Profiles
+            </h3>
 
-<div class="preview-main">
+            <p>
+              Organize supported Minecraft installations
+              and launcher profiles.
+            </p>
 
-<h3>
-Ready to play?
-</h3>
+          </div>
 
-<p>
-Select your Minecraft installation, configure your setup
-and launch your game from the Frenzy experience.
-</p>
 
-<span class="preview-button">
-LAUNCH MINECRAFT
-</span>
+          <div class="card">
 
-</div>
+            <div class="card-icon">
+              ◆
+            </div>
 
-</div>
+            <h3>
+              PvP Ready
+            </h3>
 
-</div>
+            <p>
+              Built with PvP players and a fast,
+              focused Minecraft experience in mind.
+            </p>
 
-</div>
+          </div>
 
-</section>
 
+          <div class="card">
 
-<!-- DOWNLOAD -->
+            <div class="card-icon">
+              ⌁
+            </div>
 
-<section class="section" id="download">
+            <h3>
+              Diagnostics
+            </h3>
 
-<div class="container">
+            <p>
+              Useful launcher information for
+              troubleshooting your Minecraft setup.
+            </p>
 
-<div class="section-number">
-03 / DOWNLOAD
-</div>
+          </div>
 
-<h2 class="section-title">
-Get Frenzy Client.
-</h2>
 
-<p class="section-description">
-Download the current Windows build and start setting up
-your Minecraft Java experience.
-</p>
+        </div>
 
+      </div>
 
-<div class="download-box">
+    </section>
 
 
-<div class="download-main">
+    <!-- LAUNCHER -->
 
-<h3>
-Frenzy Client for Windows
-<span class="status">● AVAILABLE</span>
-</h3>
+    <section class="section" id="launcher">
 
-<p>
-Official Windows download hosted through Google Drive.
-The current launcher build is available for Windows.
-</p>
+      <div class="container">
 
-<a
-href="https://drive.google.com/uc?export=download&id=1b72M_7RGhSa01XxmbXL5pVFvpfNr8ZID"
-target="_blank"
-rel="noopener noreferrer"
-class="btn btn-purple"
->
-Download Java Windows Build
-</a>
+        <div class="section-number">
+          02 / LAUNCHER
+        </div>
 
-</div>
+        <h2 class="section-title">
+          Your Minecraft. One launcher.
+        </h2>
 
+        <p class="section-description">
+          A clean launcher experience made for players
+          who want their Minecraft setup organized
+          and easy to access.
+        </p>
 
-<div class="support-box">
 
-<h3>
-Source & Community
-</h3>
+        <div class="launcher-preview">
 
-<p>
-Visit the project repository or join the Frenzy Discord community.
-</p>
+          <div class="preview-top">
 
-<div class="support-links">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
 
-<a
-href="https://github.com/DeveloperFrenz/frenzyclient"
-target="_blank"
-rel="noopener noreferrer"
-class="support-link"
->
-GitHub
-</a>
+          </div>
 
-<a
-href="https://discord.gg/SvzQt36jrU"
-target="_blank"
-rel="noopener noreferrer"
-class="support-link"
->
-Discord
-</a>
 
-</div>
+          <div class="preview-body">
 
-</div>
+            <div class="preview-side">
 
-</div>
+              <strong>
+                FRENZY
+              </strong>
 
-</div>
+              <div>
+                Home
+              </div>
 
-</section>
+              <div>
+                Instances
+              </div>
 
+              <div>
+                Mods
+              </div>
 
-<!-- PVP RESOURCE PACK -->
+              <div>
+                Settings
+              </div>
 
-<section class="section" id="pvp">
+            </div>
 
-<div class="container">
 
-<div class="section-number">
-04 / PVP PACK
-</div>
+            <div class="preview-main">
 
-<h2 class="section-title">
-Frenzy Client Bedrock Edition For windows
-</h2>
+              <h3>
+                Ready to play?
+              </h3>
 
-<p class="section-description">
-Download the official Frenzy Client Bedrock Edition For windows.
-</p>
+              <p>
+                Select your Minecraft installation,
+                configure your setup and launch your
+                game from the Frenzy experience.
+              </p>
 
-<a
-  class="pvp-button"
-  href="https://drive.google.com/file/d/1fY6oQ-V5PKpaZkCDtVdaU2TMEzeo9X2E/view?usp=sharing"
-  target="_blank"
->
-  <span class="pvp-icon">◆</span>
-  Download Frenzy Client Bedrock Edition For Windows.
-</a>
+              <span class="preview-button">
+                LAUNCH MINECRAFT
+              </span>
 
-</div>
+            </div>
 
-</section>
+          </div>
 
+        </div>
 
-<!-- SUPPORT -->
+      </div>
 
-<section class="section" id="support">
+    </section>
 
-<div class="container">
 
-<div class="section-number">
-05 / SUPPORT
-</div>
+    <!-- DOWNLOAD -->
 
-<h2 class="section-title">
-Need help?
-</h2>
+    <section class="section" id="download">
 
-<p class="section-description">
-Get help from the Frenzy community or contact
-customer support directly.
-</p>
+      <div class="container">
 
+        <div class="section-number">
+          03 / DOWNLOAD
+        </div>
 
-<div class="support-links">
+        <h2 class="section-title">
+          Get Frenzy Client.
+        </h2>
 
-<a
-href="https://discord.gg/SvzQt36jrU"
-target="_blank"
-rel="noopener noreferrer"
-class="support-link"
->
-Join Discord
-</a>
+        <p class="section-description">
+          Download the current Windows build and start
+          setting up your Minecraft experience.
+        </p>
 
 
-<a
-href="mailto:airoxofficial456@gmail.com"
-class="support-link"
->
-Customer Support
-</a>
+        <div class="download-box">
 
 
-<a
-href="https://github.com/DeveloperFrenz/frenzyclient"
-target="_blank"
-rel="noopener noreferrer"
-class="support-link"
->
-GitHub Repository
-</a>
+          <div class="download-main">
 
-</div>
+            <h3>
 
-</div>
+              Frenzy Client for Windows
 
-</section>
+              <span class="status">
+                ● AVAILABLE
+              </span>
 
+            </h3>
 
-<!-- FAQ -->
+            <p>
+              Official Windows download hosted through
+              Google Drive. The current Frenzy Client
+              launcher build is available for Windows.
+            </p>
 
-<section class="section" id="faq">
 
-<div class="container">
+            <a
+              href="https://drive.google.com/uc?export=download&id=1b72M_7RGhSa01XxmbXL5pVFvpfNr8ZID"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-purple"
+            >
+              Download Frenzy Client
+            </a>
 
-<div class="section-number">
-06 / FAQ
-</div>
+          </div>
 
-<h2 class="section-title">
-Frequently asked questions.
-</h2>
 
+          <div class="support-box">
 
-<details>
+            <h3>
+              Source & Community
+            </h3>
 
-<summary>
-What is Frenzy Client?
-</summary>
+            <p>
+              Visit the project repository or join
+              the official Frenzy Discord community.
+            </p>
 
-<p>
-Frenzy Client is a Minecraft Java launcher project
-with a modern dark interface and tools for managing
-your Minecraft setup.
-</p>
 
-</details>
+            <div class="support-links">
 
+              <a
+                href="https://github.com/DeveloperFrenz/frenzyclient"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="support-link"
+              >
+                GitHub
+              </a>
 
-<details>
+              <a
+                href="https://discord.gg/SvzQt36jrU"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="support-link"
+              >
+                Discord
+              </a>
 
-<summary>
-Which platform is supported?
-</summary>
+            </div>
 
-<p>
-The current public download is provided for Windows.
-</p>
+          </div>
 
-</details>
 
+        </div>
 
-<details>
+      </div>
 
-<summary>
-Where can I get the Frenzy Client Bedrock Edition? For windows?
-</summary>
+    </section>
 
-<p>
-Just go up and click on download Bedrock Edition For windows.
-</p>
 
-</details>
+    <!-- BEDROCK -->
 
+    <section class="section" id="bedrock">
 
-<details>
+      <div class="container">
 
-<summary>
-Where can I get support?
-</summary>
+        <div class="section-number">
+          04 / BEDROCK
+        </div>
 
-<p>
-Join the official Discord server or contact customer
-support through the support email.
-</p>
+        <h2 class="section-title">
+          Frenzy Client Bedrock Edition for Windows.
+        </h2>
 
-</details>
+        <p class="section-description">
+          Download the Frenzy Client Bedrock Edition
+          for Windows.
+        </p>
 
 
-<details>
+        <a
+          class="pvp-button"
+          href="https://drive.google.com/file/d/1fY6oQ-V5PKpaZkCDtVdaU2TMEzeo9X2E/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
 
-<summary>
-Where is the source code?
-</summary>
+          <span class="pvp-icon">
+            ◆
+          </span>
 
-<p>
-The public project repository is available on GitHub.
-</p>
+          Download Frenzy Client Bedrock Edition
 
-</details>
+        </a>
 
-</div>
+      </div>
 
-</section>
+    </section>
 
 
-<!-- COMMUNITY -->
+    <!-- SUPPORT -->
 
-<section class="section">
+    <section class="section" id="support">
 
-<div class="container">
+      <div class="container">
 
-<div class="section-number">
-07 / COMMUNITY
-</div>
+        <div class="section-number">
+          05 / SUPPORT
+        </div>
 
-<h2 class="section-title">
-Join the Frenzy community.
-</h2>
+        <h2 class="section-title">
+          Need help?
+        </h2>
 
-<p class="section-description">
-Follow development, get updates, report issues
-and connect with other Frenzy players.
-</p>
+        <p class="section-description">
+          Get help from the Frenzy community or contact
+          customer support directly.
+        </p>
 
 
-<div class="buttons" style="justify-content:flex-start;">
+        <div class="support-links">
 
-<a
-href="https://discord.gg/SvzQt36jrU"
-target="_blank"
-rel="noopener noreferrer"
-class="btn btn-purple"
->
-Join Discord
-</a>
 
+          <a
+            href="https://discord.gg/SvzQt36jrU"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="support-link"
+          >
+            Join Discord
+          </a>
 
-<a
-href="https://github.com/DeveloperFrenz/frenzyclient"
-target="_blank"
-rel="noopener noreferrer"
-class="btn btn-dark"
->
-View GitHub
-</a>
 
-</div>
+          <a
+            href="mailto:airoxofficial456@gmail.com"
+            class="support-link"
+          >
+            Customer Support
+          </a>
 
-</div>
 
-</section>
+          <a
+            href="https://github.com/DeveloperFrenz/frenzyclient"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="support-link"
+          >
+            GitHub Repository
+          </a>
 
-</main>
 
+        </div>
 
-<!-- FOOTER -->
+      </div>
 
-<footer>
+    </section>
 
-<div class="container">
 
-<div class="footer-inner">
+    <!-- FAQ -->
 
-<div>
+    <section class="section" id="faq">
 
-<div class="footer-brand">
-FRENZY<span>.</span>
-</div>
+      <div class="container">
 
-<div style="margin-top:8px;">
-Developed By- Reyansh Raghuvanshi
-</div>
+        <div class="section-number">
+          06 / FAQ
+        </div>
 
-</div>
+        <h2 class="section-title">
+          Frequently asked questions.
+        </h2>
 
 
-<div class="footer-links">
+        <details>
 
-<a href="#features">
-Features
-</a>
+          <summary>
+            What is Frenzy Client?
+          </summary>
 
-<a href="#download">
-Download
-</a>
+          <p>
+            Frenzy Client is a free Minecraft launcher
+            for Windows developed by Reyansh Raghuvanshi,
+            focused on performance, FPS optimization,
+            PvP and a modern Minecraft experience.
+          </p>
 
-<a href="#pvp">
-Bedrock Edition
-</a>
+        </details>
 
-<a href="#support">
-Support
-</a>
 
-<a
-href="https://discord.gg/SvzQt36jrU"
-target="_blank"
-rel="noopener noreferrer"
->
-Discord
-</a>
+        <details>
 
-<a
-href="https://github.com/DeveloperFrenz/frenzyclient"
-target="_blank"
-rel="noopener noreferrer"
->
-GitHub
-</a>
+          <summary>
+            Is Frenzy Client free?
+          </summary>
 
-</div>
+          <p>
+            Yes. The current Frenzy Client launcher
+            is provided as a free Windows download.
+          </p>
 
-</div>
+        </details>
 
 
-<div class="copyright">
+        <details>
 
-© 2026 Frenzy Client.
-Minecraft is a trademark of Mojang Studios.
-Frenzy Client is an independent project.
+          <summary>
+            Which platform is supported?
+          </summary>
 
-</div>
+          <p>
+            The current public launcher download
+            is provided for Windows.
+          </p>
 
-</div>
+        </details>
 
-</footer>
+
+        <details>
+
+          <summary>
+            Does Frenzy Client support Minecraft PvP?
+          </summary>
+
+          <p>
+            Frenzy Client is designed with a
+            performance-focused and PvP-ready
+            Minecraft experience in mind.
+          </p>
+
+        </details>
+
+
+        <details>
+
+          <summary>
+            Where can I get the Bedrock Edition?
+          </summary>
+
+          <p>
+            Use the Bedrock Edition download button
+            on this website to access the current
+            Windows Bedrock build.
+          </p>
+
+        </details>
+
+
+        <details>
+
+          <summary>
+            Where can I get support?
+          </summary>
+
+          <p>
+            Join the official Frenzy Discord server
+            or contact customer support through
+            the support email.
+          </p>
+
+        </details>
+
+
+        <details>
+
+          <summary>
+            Who developed Frenzy Client?
+          </summary>
+
+          <p>
+            Frenzy Client is developed by
+            Reyansh Raghuvanshi.
+          </p>
+
+        </details>
+
+
+        <details>
+
+          <summary>
+            Where is the source code?
+          </summary>
+
+          <p>
+            The public project repository is available
+            on GitHub.
+          </p>
+
+        </details>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- COMMUNITY -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-number">
+          07 / COMMUNITY
+        </div>
+
+        <h2 class="section-title">
+          Join the Frenzy community.
+        </h2>
+
+        <p class="section-description">
+          Follow development, get updates, report issues
+          and connect with other Frenzy players.
+        </p>
+
+
+        <div
+          class="buttons"
+          style="justify-content:flex-start;"
+        >
+
+          <a
+            href="https://discord.gg/SvzQt36jrU"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-purple"
+          >
+            Join Discord
+          </a>
+
+
+          <a
+            href="https://github.com/DeveloperFrenz/frenzyclient"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-dark"
+          >
+            View GitHub
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-inner">
+
+
+        <div>
+
+          <div class="footer-brand">
+            FRENZY<span>.</span>
+          </div>
+
+          <div style="margin-top:8px;">
+            Developed By- Reyansh Raghuvanshi
+          </div>
+
+        </div>
+
+
+        <div class="footer-links">
+
+          <a href="#features">
+            Features
+          </a>
+
+          <a href="#download">
+            Download
+          </a>
+
+          <a href="#bedrock">
+            Bedrock Edition
+          </a>
+
+          <a href="#support">
+            Support
+          </a>
+
+          <a
+            href="https://discord.gg/SvzQt36jrU"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Discord
+          </a>
+
+          <a
+            href="https://github.com/DeveloperFrenz/frenzyclient"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="copyright">
+
+        © 2026 Frenzy Client.
+        Minecraft is a trademark of Mojang Studios.
+        Frenzy Client is an independent project.
+
+      </div>
+
+    </div>
+
+  </footer>
+
 
 </body>
 </html>
