@@ -3,31 +3,323 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#07040d">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="Frenzy Client — Modern Minecraft Java Client and Launcher">
 <title>Frenzy Client — Official</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-    background:#06040b;
+    background:#030303;
     color:#fff;
     font-family:Arial,Helvetica,sans-serif;
     overflow-x:hidden;
+    cursor:none;
 }
-a{text-decoration:none;color:inherit}
-.wrap{width:min(1180px,calc(100% - 40px));margin:auto}
 
-/* NAV */
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+a{
+    cursor:none;
+}
+
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
+
+.cursor{
+    position:fixed;
+    left:0;
+    top:0;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#fff;
+    pointer-events:none;
+    z-index:99999;
+    transform:translate(-50%,-50%);
+    box-shadow:
+        0 0 8px #fff,
+        0 0 18px #ff2cff,
+        0 0 35px #ffb300;
+    transition:
+        width .15s,
+        height .15s,
+        background .15s;
+}
+
+.cursor-ring{
+    position:fixed;
+    left:0;
+    top:0;
+    width:40px;
+    height:40px;
+    border:1px solid #ff4cff;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:99998;
+    transform:translate(-50%,-50%);
+    box-shadow:
+        0 0 12px #ff39ff,
+        inset 0 0 12px #ff39ff;
+    transition:
+        width .2s,
+        height .2s,
+        border-color .2s;
+}
+
+body.hovering .cursor{
+    width:7px;
+    height:7px;
+    background:#ffd45a;
+}
+
+body.hovering .cursor-ring{
+    width:58px;
+    height:58px;
+    border-color:#ffd04a;
+    box-shadow:
+        0 0 20px #ffbb00,
+        inset 0 0 15px #ff38ff;
+}
+
+
+/* =========================================================
+   CLICK RIPPLE
+========================================================= */
+
+.click-ripple{
+    position:fixed;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    border:2px solid #ffd34e;
+    pointer-events:none;
+    z-index:99990;
+    animation:ripple .7s ease-out forwards;
+}
+
+@keyframes ripple{
+    0%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(.5);
+    }
+    100%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(12);
+    }
+}
+
+
+/* =========================================================
+   LOADING SCREEN
+========================================================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+    z-index:100000;
+    background:#020202;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    transition:opacity .7s,visibility .7s;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-logo{
+    font-size:38px;
+    font-weight:1000;
+    letter-spacing:8px;
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #ffd13b,
+            #ff49e8,
+            #9d4cff,
+            #fff
+        );
+    background-size:300%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:rainbow 2s linear infinite;
+}
+
+.loader-line{
+    width:190px;
+    height:2px;
+    margin-top:25px;
+    overflow:hidden;
+    background:#191919;
+}
+
+.loader-line span{
+    display:block;
+    height:100%;
+    width:40%;
+    background:
+        linear-gradient(
+            90deg,
+            #ff3cff,
+            #ffd33d,
+            #fff
+        );
+    animation:loaderbar 1.1s infinite;
+}
+
+.loader-text{
+    margin-top:13px;
+    color:#666;
+    font-size:9px;
+    letter-spacing:3px;
+}
+
+@keyframes loaderbar{
+    0%{transform:translateX(-150%)}
+    100%{transform:translateX(500%)}
+}
+
+@keyframes rainbow{
+    0%{background-position:0%}
+    100%{background-position:300%}
+}
+
+
+/* =========================================================
+   SPARKLES
+========================================================= */
+
+.sparkles{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.spark{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:
+        0 0 6px #fff,
+        0 0 14px #fff;
+    animation:floatSpark linear infinite;
+}
+
+.spark:nth-child(1){left:5%;top:20%;animation-duration:7s}
+.spark:nth-child(2){left:13%;top:70%;animation-duration:9s}
+.spark:nth-child(3){left:22%;top:38%;animation-duration:6s}
+.spark:nth-child(4){left:31%;top:82%;animation-duration:11s}
+.spark:nth-child(5){left:40%;top:17%;animation-duration:8s}
+.spark:nth-child(6){left:48%;top:61%;animation-duration:10s}
+.spark:nth-child(7){left:57%;top:29%;animation-duration:7s}
+.spark:nth-child(8){left:64%;top:76%;animation-duration:9s}
+.spark:nth-child(9){left:72%;top:42%;animation-duration:8s}
+.spark:nth-child(10){left:80%;top:14%;animation-duration:12s}
+.spark:nth-child(11){left:88%;top:67%;animation-duration:7s}
+.spark:nth-child(12){left:95%;top:33%;animation-duration:10s}
+
+@keyframes floatSpark{
+    0%{
+        opacity:.1;
+        transform:translateY(30px) scale(.5);
+    }
+    50%{
+        opacity:1;
+        transform:translateY(-20px) scale(1.4);
+    }
+    100%{
+        opacity:.1;
+        transform:translateY(-80px) scale(.5);
+    }
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body:before{
+    content:"";
+    position:fixed;
+    z-index:-3;
+    width:650px;
+    height:650px;
+    left:50%;
+    top:-350px;
+    transform:translateX(-50%);
+    background:#ff18d4;
+    opacity:.10;
+    filter:blur(160px);
+    border-radius:50%;
+}
+
+body:after{
+    content:"";
+    position:fixed;
+    z-index:-3;
+    width:600px;
+    height:600px;
+    right:-250px;
+    bottom:-250px;
+    background:#ffb300;
+    opacity:.06;
+    filter:blur(160px);
+    border-radius:50%;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.wrap{
+    width:min(1180px,calc(100% - 40px));
+    margin:auto;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
 
 header{
     height:72px;
     position:sticky;
     top:0;
-    z-index:100;
-    background:rgba(6,4,11,.9);
-    border-bottom:1px solid #191321;
-    backdrop-filter:blur(18px);
+    z-index:500;
+    border-bottom:1px solid #ffffff10;
+    background:rgba(3,3,3,.82);
+    backdrop-filter:blur(20px);
 }
 
 .nav{
@@ -41,111 +333,155 @@ header{
     display:flex;
     align-items:center;
     gap:10px;
-    font-size:19px;
-    font-weight:900;
+    font-size:18px;
+    font-weight:1000;
     letter-spacing:2px;
 }
 
 .logo-icon{
     width:37px;
     height:37px;
+    border-radius:11px;
     display:grid;
     place-items:center;
-    border-radius:11px;
-    background:linear-gradient(135deg,#c05cff,#681be0);
-    box-shadow:0 0 30px #8529e955;
+    background:
+        linear-gradient(
+            135deg,
+            #ff42df,
+            #8d39ff,
+            #ffbd28
+        );
+    box-shadow:
+        0 0 25px #ff38d955,
+        0 0 40px #ffb30022;
 }
 
 .logo small{
     display:block;
+    color:#777;
     font-size:7px;
     letter-spacing:3px;
-    color:#9c95a7;
 }
 
 .navlinks{
     display:flex;
-    gap:28px;
+    align-items:center;
+    gap:27px;
 }
 
 .navlinks a{
-    color:#aaa3b3;
-    font-size:13px;
-    font-weight:700;
-}
-
-.navlinks a:hover{color:#fff}
-
-.nav-download{
-    padding:11px 19px;
-    border-radius:10px;
-    background:linear-gradient(135deg,#c15cff,#7122e5);
-    font-size:13px;
+    color:#858585;
+    font-size:12px;
     font-weight:800;
-    box-shadow:0 10px 30px #7c24dc55;
+    transition:.2s;
 }
 
-/* HERO */
+.navlinks a:hover{
+    color:#fff;
+    text-shadow:0 0 12px #ff3dff;
+}
+
+.nav-button{
+    padding:11px 18px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:900;
+    background:
+        linear-gradient(
+            120deg,
+            #ff3fdd,
+            #7b32ff,
+            #ffc832
+        );
+    background-size:200%;
+    animation:buttonGradient 4s linear infinite;
+    box-shadow:0 8px 28px #ff31dc33;
+}
+
+@keyframes buttonGradient{
+    0%{background-position:0%}
+    100%{background-position:200%}
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
-    min-height:620px;
+    min-height:650px;
     display:grid;
-    grid-template-columns:48% 52%;
-    border-bottom:1px solid #191321;
+    grid-template-columns:53% 47%;
+    position:relative;
+    border-bottom:1px solid #ffffff0c;
 }
 
 .hero-content{
     display:flex;
     justify-content:center;
     flex-direction:column;
-    padding:80px 0;
+    padding:90px 0;
 }
 
 .badge{
     width:max-content;
     padding:8px 13px;
-    border:1px solid #a13fff55;
+    border:1px solid #ff42dd55;
     border-radius:30px;
-    background:#9a35ff0d;
-    color:#d8b8ff;
-    font-size:10px;
-    font-weight:800;
+    color:#e2a9ff;
+    background:#ff36d40b;
+    font-size:9px;
+    font-weight:900;
     letter-spacing:1px;
 }
 
-.badge span{
+.badge i{
     display:inline-block;
     width:6px;
     height:6px;
-    border-radius:50%;
-    background:#bb52ff;
-    box-shadow:0 0 12px #bb52ff;
     margin-right:7px;
+    border-radius:50%;
+    background:#ff45dc;
+    box-shadow:0 0 14px #ff45dc;
 }
 
-h1{
-    font-size:clamp(55px,7vw,90px);
-    line-height:.88;
-    letter-spacing:-6px;
+.hero h1{
     margin:25px 0;
+    font-size:clamp(58px,8vw,100px);
+    line-height:.86;
+    letter-spacing:-7px;
+    font-weight:1000;
 }
 
-.purple{
-    color:#b943ff;
-    text-shadow:0 0 35px #9d2fff55;
+.gradient-text{
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #ffd338,
+            #ff55dc,
+            #a54cff,
+            #ffd338,
+            #fff
+        );
+    background-size:300%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:rainbow 5s linear infinite;
 }
 
-.hero-text{
-    max-width:500px;
-    color:#9b94a5;
-    font-size:15px;
-    line-height:1.75;
+.hero-description{
+    max-width:510px;
+    color:#8e8e8e;
+    font-size:14px;
+    line-height:1.8;
 }
 
 .buttons{
     display:flex;
-    gap:12px;
     flex-wrap:wrap;
+    gap:11px;
     margin-top:28px;
 }
 
@@ -153,169 +489,160 @@ h1{
     min-height:49px;
     padding:0 21px;
     display:inline-flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
     border-radius:11px;
-    font-size:13px;
-    font-weight:850;
+    font-size:12px;
+    font-weight:900;
     transition:.25s;
 }
 
-.btn:hover{transform:translateY(-3px)}
+.btn:hover{
+    transform:translateY(-4px);
+}
 
 .primary{
-    background:linear-gradient(135deg,#c05cff,#7121e5);
-    box-shadow:0 12px 35px #7c25e855;
+    background:
+        linear-gradient(
+            120deg,
+            #ff3fdd,
+            #8b32ff,
+            #ffca32
+        );
+    background-size:200%;
+    box-shadow:
+        0 12px 35px #ff3fdf33,
+        0 0 30px #ffbb0022;
+    animation:buttonGradient 5s linear infinite;
 }
 
 .secondary{
-    background:#ffffff08;
-    border:1px solid #ffffff18;
+    border:1px solid #ffffff16;
+    background:#ffffff05;
+    color:#ddd;
 }
-
-.pvp{
-    width:min(510px,100%);
-    min-height:58px;
-    margin-top:17px;
-    padding:8px 13px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    border-radius:13px;
-    border:1px solid #a33dff88;
-    background:linear-gradient(90deg,#8a2de91b,#ffffff04);
-}
-
-.pvp:hover{
-    border-color:#c064ff;
-    box-shadow:0 0 30px #9b35ff22;
-}
-
-.pvp-icon{
-    width:40px;
-    height:40px;
-    display:grid;
-    place-items:center;
-    border-radius:10px;
-    background:linear-gradient(135deg,#c05cff,#6c20dc);
-}
-
-.pvp strong{font-size:13px}
-.pvp-arrow{margin-left:auto;color:#c060ff;font-size:21px}
-
-.chips{
-    display:flex;
-    gap:8px;
-    margin-top:22px;
-    flex-wrap:wrap;
-}
-
-.chip{
-    padding:6px 10px;
-    border:1px solid #ffffff10;
-    border-radius:7px;
-    color:#777180;
-    background:#ffffff03;
-    font-size:10px;
-}
-
-/* HERO ART */
 
 .hero-art{
-    min-height:620px;
+    min-height:650px;
     position:relative;
     overflow:hidden;
     background:
-        radial-gradient(circle at 55% 45%,#8424e9 0,#45118a 20%,#150522 48%,transparent 72%);
+        radial-gradient(
+            circle at 55% 48%,
+            #ff25d933,
+            #771bc422 23%,
+            transparent 65%
+        );
 }
 
-.hero-art:before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-        radial-gradient(circle at 75% 15%,white 0 4px,transparent 5px),
-        radial-gradient(circle at 25% 30%,#d886ff 0 2px,transparent 3px),
-        radial-gradient(circle at 70% 70%,#c15cff 0 2px,transparent 3px);
-}
-
-.portal{
+.hero-orb{
     position:absolute;
     width:390px;
     height:390px;
-    top:90px;
     right:8%;
-    border-radius:40%;
-    transform:rotate(17deg);
-    background:linear-gradient(135deg,#29084f,#08050d);
-    border:2px solid #bd4cff55;
-    box-shadow:0 0 80px #8526df66;
+    top:125px;
+    border-radius:42%;
+    transform:rotate(18deg);
+    border:2px solid #ff45e866;
+    background:
+        linear-gradient(
+            135deg,
+            #170b18,
+            #080608
+        );
+    box-shadow:
+        0 0 90px #ff28e933,
+        inset 0 0 50px #ffbd2411;
 }
 
-.portal:before{
+.hero-orb:before{
     content:"";
     position:absolute;
     inset:35px;
-    border:1px solid #bb55ff55;
+    border:1px solid #ffc52e66;
     transform:rotate(18deg);
 }
 
-.player{
+.hero-orb:after{
+    content:"";
+    position:absolute;
+    inset:75px;
+    border:1px solid #ff38db66;
+    transform:rotate(-20deg);
+}
+
+.hero-cube{
     position:absolute;
     width:170px;
     height:170px;
     right:23%;
-    top:205px;
-    transform:rotate(7deg);
-    background:#0b0910;
-    border:10px solid #15101c;
-    box-shadow:0 0 0 2px #9c35dc,0 0 55px #8325db;
+    top:230px;
+    transform:rotate(8deg);
+    border:10px solid #120d12;
+    background:#050505;
+    box-shadow:
+        0 0 0 2px #ff36df,
+        0 0 45px #ff32df88;
 }
 
-.player:before{
+.hero-cube:before{
     content:"";
     position:absolute;
     width:30px;
     height:30px;
     left:35px;
-    top:43px;
-    background:#bf43ff;
+    top:42px;
+    background:#ffbd2f;
     box-shadow:
-        63px 0 #bf43ff,
-        0 55px #bf43ff,
-        63px 55px #bf43ff;
+        63px 0 #ff39db,
+        0 55px #ff39db,
+        63px 55px #ffbd2f;
 }
 
-.sword{
+.hero-sword{
     position:absolute;
     width:270px;
-    height:32px;
-    right:7%;
-    top:360px;
+    height:30px;
+    right:6%;
+    top:390px;
     transform:rotate(-42deg);
-    background:linear-gradient(90deg,#fff,#d875ff,#8522db);
-    box-shadow:0 0 35px #a63dff;
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #ffd53c,
+            #ff3ddc
+        );
+    box-shadow:
+        0 0 35px #ff3ddd;
 }
 
-.art-text{
+.hero-label{
     position:absolute;
-    right:8%;
-    top:12%;
-    color:#dda7ff;
-    font-size:13px;
-    font-weight:900;
-    transform:rotate(8deg);
+    right:9%;
+    top:13%;
+    font-size:12px;
+    font-weight:1000;
+    color:#ffd45b;
+    text-align:right;
+    line-height:1.4;
+    transform:rotate(7deg);
+    text-shadow:
+        0 0 15px #ffb300;
 }
 
-/* STRIP */
+
+/* =========================================================
+   INFO STRIP
+========================================================= */
 
 .strip{
-    background:#090611;
-    border-bottom:1px solid #191321;
+    border-bottom:1px solid #ffffff0c;
+    background:#070707;
 }
 
 .strip-inner{
-    min-height:58px;
+    min-height:60px;
     display:grid;
     grid-template-columns:repeat(5,1fr);
 }
@@ -325,47 +652,62 @@ h1{
     justify-content:center;
     align-items:center;
     gap:9px;
-    border-right:1px solid #191321;
-    color:#bbb4c5;
-    font-size:11px;
-    font-weight:700;
+    border-right:1px solid #ffffff0b;
+    color:#8c8c8c;
+    font-size:10px;
+    font-weight:800;
 }
 
-.strip-item:last-child{border:0}
-.strip-item b{font-size:18px;color:#b84dff}
+.strip-item:last-child{
+    border-right:0;
+}
 
-/* SECTIONS */
+.strip-item b{
+    font-size:17px;
+    color:#ffbd2e;
+    text-shadow:0 0 12px #ffbd2e;
+}
 
-section{padding:95px 0}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section{
+    padding:100px 0;
+}
 
 .kicker{
-    color:#ad43ff;
-    font-size:10px;
-    font-weight:900;
+    color:#ff49dc;
+    font-size:9px;
+    font-weight:1000;
     letter-spacing:2px;
     margin-bottom:12px;
 }
 
 .section-title h2{
-    font-size:clamp(35px,5vw,57px);
-    line-height:1;
-    letter-spacing:-3px;
+    font-size:clamp(36px,5vw,58px);
+    line-height:.98;
+    letter-spacing:-4px;
 }
 
 .section-title p{
     max-width:600px;
     margin-top:16px;
-    color:#8d8796;
-    font-size:14px;
-    line-height:1.7;
+    color:#858585;
+    font-size:13px;
+    line-height:1.8;
 }
 
-/* FEATURES */
+
+/* =========================================================
+   FEATURES
+========================================================= */
 
 .features-layout{
     display:grid;
     grid-template-columns:31% 69%;
-    gap:25px;
+    gap:28px;
 }
 
 .feature-grid{
@@ -375,29 +717,63 @@ section{padding:95px 0}
 }
 
 .card{
-    min-height:150px;
+    min-height:155px;
     padding:22px;
-    border:1px solid #ffffff12;
-    border-radius:13px;
-    background:#ffffff03;
+    border:1px solid #ffffff10;
+    border-radius:14px;
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff06,
+            #ffffff01
+        );
     transition:.25s;
 }
 
 .card:hover{
     transform:translateY(-5px);
-    border-color:#a33cff66;
-    background:#a33cff09;
+    border-color:#ff42df66;
+    box-shadow:
+        0 15px 40px #ff2fdf0c,
+        inset 0 0 30px #ff2fdf06;
 }
 
 .icon{
-    width:33px;
-    height:33px;
+    width:34px;
+    height:34px;
     display:grid;
     place-items:center;
     border-radius:9px;
     margin-bottom:15px;
-    background:linear-gradient(135deg,#c05cff,#6c20dc);
-    box-shadow:0 6px 22px #8226dc44;
+    color:#fff;
+    background:
+        linear-gradient(
+            135deg,
+            #ff3fdc,
+            #8835ff,
+            #ffbc2e
+        );
+    box-shadow:0 6px 25px #ff35dc33;
+}
+
+.card:nth-child(2) .icon{
+    background:linear-gradient(135deg,#36d9ff,#5968ff);
+}
+
+.card:nth-child(3) .icon{
+    background:linear-gradient(135deg,#ffd13c,#ff7b32);
+}
+
+.card:nth-child(4) .icon{
+    background:linear-gradient(135deg,#46ff91,#00b8ff);
+}
+
+.card:nth-child(5) .icon{
+    background:linear-gradient(135deg,#b95cff,#ff43c8);
+}
+
+.card:nth-child(6) .icon{
+    background:linear-gradient(135deg,#ff5c5c,#ffbd38);
 }
 
 .card h3{
@@ -406,12 +782,15 @@ section{padding:95px 0}
 }
 
 .card p{
-    color:#817b89;
-    font-size:11px;
-    line-height:1.6;
+    color:#7c7c7c;
+    font-size:10px;
+    line-height:1.7;
 }
 
-/* LAUNCHER */
+
+/* =========================================================
+   LAUNCHER
+========================================================= */
 
 .launcher{
     padding:15px;
@@ -419,18 +798,19 @@ section{padding:95px 0}
     grid-template-columns:52% 48%;
     gap:35px;
     align-items:center;
-    border:1px solid #9639dc55;
+    border:1px solid #ff3bdf44;
     border-radius:18px;
     background:#ffffff03;
+    box-shadow:0 0 70px #ff2edb08;
 }
 
 .launcher-window{
     min-height:310px;
-    border:1px solid #a44cff44;
+    border:1px solid #ffffff12;
     border-radius:11px;
     overflow:hidden;
-    background:#090710;
-    box-shadow:0 25px 60px #0009;
+    background:#080808;
+    box-shadow:0 25px 60px #000;
 }
 
 .window-bar{
@@ -439,14 +819,14 @@ section{padding:95px 0}
     gap:6px;
     align-items:center;
     padding:0 12px;
-    border-bottom:1px solid #ffffff0d;
+    border-bottom:1px solid #ffffff0b;
 }
 
 .dot{
     width:6px;
     height:6px;
     border-radius:50%;
-    background:#514b58;
+    background:#555;
 }
 
 .window-content{
@@ -457,26 +837,27 @@ section{padding:95px 0}
 
 .sidebar{
     padding:15px 10px;
-    border-right:1px solid #ffffff0d;
+    border-right:1px solid #ffffff0b;
 }
 
 .side-logo{
-    font-size:11px;
-    font-weight:900;
     margin-bottom:24px;
+    font-size:11px;
+    font-weight:1000;
+    letter-spacing:1px;
 }
 
 .side-link{
     padding:8px;
     margin-bottom:5px;
-    color:#746e7d;
     border-radius:6px;
+    color:#6d6d6d;
     font-size:9px;
 }
 
 .side-link.active{
-    color:#d7b8ff;
-    background:#7927d62c;
+    color:#fff;
+    background:#ff3cdb1c;
 }
 
 .game{
@@ -487,7 +868,27 @@ section{padding:95px 0}
     height:100px;
     border-radius:8px;
     background:
-        linear-gradient(135deg,#17122b,#54237d,#140b28);
+        linear-gradient(
+            135deg,
+            #100d10,
+            #3c123a,
+            #7a243f,
+            #111
+        );
+    position:relative;
+    overflow:hidden;
+}
+
+.game-image:before{
+    content:"";
+    position:absolute;
+    width:130px;
+    height:130px;
+    right:20px;
+    bottom:-50px;
+    transform:rotate(45deg);
+    background:#ffbd2e22;
+    border:1px solid #ff38dc55;
 }
 
 .game h3{
@@ -496,7 +897,8 @@ section{padding:95px 0}
 }
 
 .game p{
-    color:#6e6877;
+    margin-top:3px;
+    color:#686868;
     font-size:9px;
 }
 
@@ -506,22 +908,29 @@ section{padding:95px 0}
     display:grid;
     place-items:center;
     border-radius:8px;
-    background:linear-gradient(135deg,#bd52ff,#6c20dc);
+    background:
+        linear-gradient(
+            120deg,
+            #ff39dd,
+            #8d31ff,
+            #ffbd2f
+        );
     font-size:10px;
-    font-weight:900;
+    font-weight:1000;
 }
 
 .launcher-copy h2{
-    font-size:clamp(35px,5vw,57px);
+    font-size:clamp(36px,5vw,58px);
     line-height:.95;
-    letter-spacing:-3px;
+    letter-spacing:-4px;
 }
 
 .launcher-copy p{
     max-width:450px;
     margin:18px 0;
-    color:#8b8593;
+    color:#858585;
     font-size:13px;
+    line-height:1.7;
 }
 
 .checks{
@@ -530,22 +939,25 @@ section{padding:95px 0}
 }
 
 .check{
-    color:#bbb4c3;
+    color:#b5b5b5;
     font-size:11px;
 }
 
 .check b{
-    color:#bd50ff;
-    margin-right:7px;
+    color:#ffbe32;
+    margin-right:8px;
 }
 
-/* STATS */
+
+/* =========================================================
+   STATS
+========================================================= */
 
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     margin-top:15px;
-    border:1px solid #9639dc44;
+    border:1px solid #ffffff0e;
     border-radius:13px;
     overflow:hidden;
 }
@@ -555,38 +967,70 @@ section{padding:95px 0}
     display:grid;
     place-items:center;
     align-content:center;
-    border-right:1px solid #ffffff0e;
+    border-right:1px solid #ffffff0b;
 }
 
-.stat:last-child{border:0}
-.stat strong{font-size:30px;color:#bb4dff}
-.stat span{font-size:10px;color:#817a89}
+.stat:last-child{
+    border:0;
+}
 
-/* DOWNLOAD */
+.stat strong{
+    font-size:30px;
+    color:#ffd044;
+    text-shadow:0 0 18px #ffb30066;
+}
+
+.stat:nth-child(2) strong{
+    color:#ff4ddd;
+}
+
+.stat:nth-child(3) strong{
+    color:#55caff;
+}
+
+.stat:nth-child(4) strong{
+    color:#7dff91;
+}
+
+.stat span{
+    margin-top:3px;
+    color:#707070;
+    font-size:9px;
+}
+
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
 
 .download-box{
-    min-height:330px;
-    padding:50px;
+    min-height:350px;
+    padding:52px;
     position:relative;
     overflow:hidden;
-    border:1px solid #9639dc55;
+    border:1px solid #ff3fdd44;
     border-radius:18px;
     background:
-        radial-gradient(circle at 75% 50%,#7020d544,transparent 42%),
+        radial-gradient(
+            circle at 75% 50%,
+            #ff27d522,
+            transparent 40%
+        ),
         #ffffff03;
 }
 
 .download-box h2{
-    font-size:clamp(40px,6vw,64px);
+    font-size:clamp(42px,6vw,66px);
     line-height:.95;
-    letter-spacing:-4px;
+    letter-spacing:-5px;
 }
 
 .download-box p{
     max-width:500px;
     margin:18px 0 25px;
-    color:#8e8796;
+    color:#858585;
     font-size:13px;
+    line-height:1.7;
 }
 
 .download-art{
@@ -595,30 +1039,40 @@ section{padding:95px 0}
     top:0;
     width:45%;
     height:100%;
-    background:radial-gradient(circle,#a83cff66,transparent 65%);
+    background:
+        radial-gradient(
+            circle,
+            #ff39dc55,
+            transparent 65%
+        );
 }
 
-.portal-small{
+.download-orb{
     position:absolute;
-    width:130px;
+    width:135px;
     height:190px;
-    right:28%;
-    top:65px;
-    border:5px solid #b64cff;
+    right:30%;
+    top:70px;
+    border:5px solid #ff43dc;
     border-radius:45%;
-    box-shadow:0 0 50px #9c2fff;
+    box-shadow:
+        0 0 50px #ff34dd,
+        inset 0 0 30px #ffbd3322;
 }
 
-.portal-small:after{
+.download-orb:after{
     content:"";
     position:absolute;
     inset:14px;
     border-radius:40%;
-    background:#912cda66;
-    box-shadow:inset 0 0 35px #c05cff;
+    background:#ff32d522;
+    box-shadow:inset 0 0 35px #ffbd32;
 }
 
-/* SUPPORT */
+
+/* =========================================================
+   SUPPORT
+========================================================= */
 
 .support-grid{
     display:grid;
@@ -627,631 +1081,27 @@ section{padding:95px 0}
 }
 
 .support-card{
-    min-height:155px;
+    min-height:170px;
     padding:25px;
-    border:1px solid #ffffff12;
-    border-radius:13px;
+    border:1px solid #ffffff10;
+    border-radius:14px;
     background:#ffffff03;
     transition:.25s;
 }
 
 .support-card:hover{
-    transform:translateY(-4px);
-    border-color:#a33cff66;
+    transform:translateY(-5px);
+    border-color:#ff42df66;
+    box-shadow:0 15px 40px #ff30df0b;
 }
 
-.support-card h3{
-    font-size:14px;
+.support-card:nth-child(1) .icon{
+    background:linear-gradient(135deg,#7289da,#5865f2);
 }
 
-.support-card p{
-    color:#817b89;
-    font-size:11px;
-    margin-top:7px;
+.support-card:nth-child(2) .icon{
+    background:linear-gradient(135deg,#ffbd32,#ff6b32);
 }
 
-.support-card small{
-    display:block;
-    color:#b64cff;
-    font-size:10px;
-    margin-top:14px;
-}
-
-/* FAQ */
-
-.faq{
-    max-width:850px;
-}
-
-details{
-    margin-bottom:8px;
-    border:1px solid #ffffff10;
-    border-radius:10px;
-    background:#ffffff03;
-}
-
-summary{
-    cursor:pointer;
-    padding:18px 20px;
-    list-style:none;
-    font-size:12px;
-    font-weight:800;
-}
-
-summary::-webkit-details-marker{display:none}
-
-summary:after{
-    content:"+";
-    float:right;
-    color:#bd4fff;
-    font-size:17px;
-}
-
-details[open] summary:after{content:"−"}
-
-details p{
-    padding:0 20px 18px;
-    color:#817a89;
-    font-size:11px;
-    line-height:1.7;
-}
-
-/* COMMUNITY */
-
-.community{
-    text-align:center;
-    padding:70px 25px;
-    border:1px solid #9639dc55;
-    border-radius:18px;
-    background:radial-gradient(circle,#7921d522,transparent 65%);
-}
-
-.community h2{
-    font-size:clamp(40px,6vw,65px);
-    letter-spacing:-4px;
-}
-
-.community p{
-    max-width:550px;
-    margin:15px auto 25px;
-    color:#8b8593;
-}
-
-/* FOOTER */
-
-footer{
-    border-top:1px solid #191321;
-    padding:40px 0;
-}
-
-.footer{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:25px;
-}
-
-.footer-brand{
-    font-size:14px;
-    font-weight:900;
-    letter-spacing:1px;
-}
-
-.footer-brand small{
-    display:block;
-    color:#746d7b;
-    font-size:9px;
-    margin-top:6px;
-}
-
-.footer-links{
-    display:flex;
-    flex-wrap:wrap;
-    gap:18px;
-}
-
-.footer-links a{
-    color:#77717f;
-    font-size:10px;
-}
-
-.footer-links a:hover{color:#bf5cff}
-
-.copy{
-    color:#514b58;
-    font-size:9px;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-    .navlinks{display:none}
-
-    .hero{
-        grid-template-columns:1fr;
-    }
-
-    .hero-content{
-        padding:70px 0 35px;
-    }
-
-    .hero-art{
-        min-height:390px;
-    }
-
-    .features-layout{
-        grid-template-columns:1fr;
-    }
-
-    .launcher{
-        grid-template-columns:1fr;
-    }
-
-    .feature-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:600px){
-
-    .wrap{
-        width:calc(100% - 28px);
-    }
-
-    .hero-art{
-        min-height:330px;
-    }
-
-    h1{
-        font-size:56px;
-    }
-
-    .portal{
-        width:260px;
-        height:260px;
-        right:5%;
-        top:35px;
-    }
-
-    .player{
-        width:120px;
-        height:120px;
-        right:23%;
-        top:110px;
-    }
-
-    .player:before{
-        width:22px;
-        height:22px;
-        left:25px;
-        top:30px;
-        box-shadow:
-            46px 0 #bf43ff,
-            0 40px #bf43ff,
-            46px 40px #bf43ff;
-    }
-
-    .sword{
-        width:190px;
-        top:210px;
-        right:2%;
-    }
-
-    .strip-inner{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .strip-item{
-        min-height:50px;
-    }
-
-    .strip-item:last-child{
-        grid-column:1/-1;
-    }
-
-    section{
-        padding:70px 0;
-    }
-
-    .feature-grid,
-    .support-grid{
-        grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .stat:nth-child(2){
-        border-right:0;
-    }
-
-    .download-box{
-        padding:35px 22px;
-        min-height:410px;
-    }
-
-    .download-art{
-        width:100%;
-        height:190px;
-        top:auto;
-        bottom:-20px;
-    }
-
-    .footer{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<div class="wrap nav">
-
-<a class="logo" href="#home">
-    <span class="logo-icon">◆</span>
-    <span>FRENZY<small>CLIENT</small></span>
-</a>
-
-<nav class="navlinks">
-    <a href="#home">Home</a>
-    <a href="#features">Features</a>
-    <a href="#launcher">Launcher</a>
-    <a href="#download">Download</a>
-    <a href="#support">Support</a>
-    <a href="#faq">FAQ</a>
-</nav>
-
-<a class="nav-download" href="#download">↓ &nbsp; Download</a>
-
-</div>
-</header>
-
-
-<main>
-
-<!-- HERO -->
-
-<section class="hero" id="home">
-
-<div class="wrap hero-content">
-
-<div class="badge">
-<span></span>
-MINECRAFT JAVA • FRENZY CLIENT
-</div>
-
-<h1>
-PLAY<br>
-<span class="purple">FRENZY</span>
-</h1>
-
-<p class="hero-text">
-A modern Minecraft Java client and launcher built for
-performance, customization and a clean gaming experience.
-</p>
-
-<div class="buttons">
-<a class="btn primary" href="#download">
-↓ &nbsp; Download Frenzy
-</a>
-
-<a class="btn secondary" href="#features">
-Explore Features →
-</a>
-</div>
-
-<a class="pvp"
-href="https://github.com/DeveloperFrenz/Frenzy-pvp-texturepack/raw/refs/heads/main/%C2%A7d%C2%A7lFrenzy%20%C2%A7f%C2%A7lPvp%2016x.zip">
-
-<span class="pvp-icon">◆</span>
-<strong>Download Frenzy PvP Texture Pack</strong>
-<span class="pvp-arrow">→</span>
-
-</a>
-
-<div class="chips">
-<span class="chip">Minecraft Java</span>
-<span class="chip">Fast Launcher</span>
-<span class="chip">PvP Ready</span>
-<span class="chip">Modern UI</span>
-</div>
-
-</div>
-
-
-<div class="hero-art">
-
-<div class="portal"></div>
-<div class="player"></div>
-<div class="sword"></div>
-
-<div class="art-text">
-BETTER<br>
-FASTER<br>
-STRONGER
-</div>
-
-</div>
-
-</section>
-
-
-<!-- FEATURE STRIP -->
-
-<div class="strip">
-<div class="wrap strip-inner">
-
-<div class="strip-item">
-<b>ϟ</b> Minecraft Java
-</div>
-
-<div class="strip-item">
-<b>◇</b> Fast Launcher
-</div>
-
-<div class="strip-item">
-<b>✦</b> Customizable
-</div>
-
-<div class="strip-item">
-<b>⚔</b> PvP Ready
-</div>
-
-<div class="strip-item">
-<b>◉</b> Community
-</div>
-
-</div>
-</div>
-
-
-<!-- FEATURES -->
-
-<section id="features">
-
-<div class="wrap features-layout">
-
-<div>
-
-<div class="section-title">
-
-<div class="kicker">
-01 / FEATURES
-</div>
-
-<h2>
-Everything you <span class="purple">need.</span>
-</h2>
-
-<p>
-Frenzy brings your launcher, client experience,
-customization and Minecraft tools together in one
-modern interface.
-</p>
-
-</div>
-
-<a class="btn primary" href="#launcher">
-View All Features →
-</a>
-
-</div>
-
-
-<div class="feature-grid">
-
-<article class="card">
-<div class="icon">ϟ</div>
-<h3>Fast Launcher</h3>
-<p>Launch Minecraft quickly and easily.</p>
-</article>
-
-<article class="card">
-<div class="icon">◇</div>
-<h3>Mod Management</h3>
-<p>Organize compatible mods in one place.</p>
-</article>
-
-<article class="card">
-<div class="icon">✦</div>
-<h3>Performance Focus</h3>
-<p>Smooth client experience with useful optimizations.</p>
-</article>
-
-<article class="card">
-<div class="icon">⚔</div>
-<h3>PvP Experience</h3>
-<p>Designed for PvP players and competitive gameplay.</p>
-</article>
-
-<article class="card">
-<div class="icon">▣</div>
-<h3>Microsoft Login</h3>
-<p>Official authentication support for legitimate accounts.</p>
-</article>
-
-<article class="card">
-<div class="icon">◇</div>
-<h3>Secure Updates</h3>
-<p>Release and update infrastructure for the launcher.</p>
-</article>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- LAUNCHER -->
-
-<section id="launcher">
-
-<div class="wrap">
-
-<div class="launcher">
-
-<div class="launcher-window">
-
-<div class="window-bar">
-<span class="dot"></span>
-<span class="dot"></span>
-<span class="dot"></span>
-</div>
-
-<div class="window-content">
-
-<aside class="sidebar">
-
-<div class="side-logo">
-◆ FRENZY
-</div>
-
-<div class="side-link active">
-▣ Instances
-</div>
-
-<div class="side-link">
-♙ Accounts
-</div>
-
-<div class="side-link">
-⚙ Settings
-</div>
-
-<div class="side-link">
-◇ Mods
-</div>
-
-</aside>
-
-<div class="game">
-
-<div class="game-image"></div>
-
-<h3>Frenzy PvP</h3>
-
-<p>Minecraft 1.21</p>
-
-<div class="launch">
-LAUNCH
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="launcher-copy">
-
-<div class="kicker">
-02 / LAUNCHER
-</div>
-
-<h2>
-Your Minecraft.<br>
-<span class="purple">Your setup.</span>
-</h2>
-
-<p>
-A clean and modern launcher experience with
-the tools you need to get started.
-</p>
-
-<div class="checks">
-
-<div class="check">
-<b>✓</b> Easy to use interface
-</div>
-
-<div class="check">
-<b>✓</b> Manage multiple instances
-</div>
-
-<div class="check">
-<b>✓</b> Customizable settings
-</div>
-
-<div class="check">
-<b>✓</b> Built for performance
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
-<strong>01+</strong>
-<span>Modern Client</span>
-</div>
-
-<div class="stat">
-<strong>∞</strong>
-<span>Customization</span>
-</div>
-
-<div class="stat">
-<strong>24/7</strong>
-<span>Community</span>
-</div>
-
-<div class="stat">
-<strong>0</strong>
-<span>Unnecessary Clutter</span>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- DOWNLOAD -->
-
-<section id="download">
-
-<div class="wrap">
-
-<div class="download-box">
-
-<div class="download-art">
-<div class="portal-small"></div>
-</div>
-
-<div class="kicker">
-03 / DOWNLOAD
-</div>
-
-<h2>
-Get <span class="purple">Frenzy.</span>
-</h2>
-
-<p>
-The official Windows launcher will be connected here
-when the EXE release is ready. Until then,
-download the Frenzy PvP Texture Pack.
-</p>
-
-<div class="buttons">
-
-<a class="btn primary"
-href="#"
-onclick="alert('Frenzy Client Windows EXE will be available soon.');return false;">
-▣ &nbsp; Download for Windows
-</a>
-
-<a class="btn secondary"
-href="https://github.com/DeveloperFrenz/Frenzy-pvp-texturepack/
+.support-card:nth-child(3) .icon{
+    backgroun
