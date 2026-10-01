@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frenzy Client — Loading</title>
+<style>
+:root{--gold:#ffd36a;--gold2:#d7962f;--gold3:#9a5b16;--cream:#fff3c4;--brown:#3a210b;--brown2:#171008;--black:#030303}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100%;overflow:hidden}
+body{background:#030302;color:#fff;font-family:Arial,Helvetica,sans-serif}
+#loader{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(255,190,65,.18),transparent 25%),radial-gradient(circle at 15% 85%,rgba(135,70,15,.22),transparent 35%),radial-gradient(circle at 85% 15%,rgba(255,215,120,.08),transparent 34%),linear-gradient(135deg,#030302,#171008 48%,#020202)}
+.loader-grid{position:absolute;inset:-50%;background-image:linear-gradient(rgba(255,190,70,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,190,70,.055) 1px,transparent 1px);background-size:55px 55px;transform:perspective(500px) rotateX(60deg);animation:gridMove 8s linear infinite;mask-image:linear-gradient(to bottom,transparent,#000 35%,#000 70%,transparent)}
+@keyframes gridMove{from{transform:perspective(500px) rotateX(60deg) translateY(0)}to{transform:perspective(500px) rotateX(60deg) translateY(55px)}}
+.loader-glow{position:absolute;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,rgba(255,194,70,.22),rgba(170,90,15,.08) 40%,transparent 70%);filter:blur(8px);animation:loaderPulse 2.2s ease-in-out infinite}
+@keyframes loaderPulse{0%,100%{transform:scale(.85);opacity:.65}50%{transform:scale(1.12);opacity:1}}
+.loader-content{position:relative;z-index:3;text-align:center;display:flex;flex-direction:column;align-items:center}
+.loader-f{position:relative;font-size:150px;line-height:.8;font-weight:1000;font-style:italic;letter-spacing:-15px;background:linear-gradient(135deg,#fff9df 0%,#ffe8a0 18%,#ffd05a 38%,#b86b12 62%,#6f3908 82%,#ffe59a 100%);background-size:250% 250%;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 8px rgba(255,210,90,.9)) drop-shadow(0 0 35px rgba(180,95,15,.65));animation:logoReveal 1.4s cubic-bezier(.16,1,.3,1) forwards,goldShift 3s linear infinite 1.4s}
+@keyframes logoReveal{0%{opacity:0;transform:scale(.45) rotateX(70deg);filter:blur(18px) drop-shadow(0 0 0 transparent)}60%{opacity:1;transform:scale(1.08) rotateX(0)}100%{opacity:1;transform:scale(1)}}
+@keyframes goldShift{0%{background-position:0% 50%}100%{background-position:250% 50%}}
+.loader-ring{position:absolute;width:235px;height:235px;border:1px solid rgba(255,205,100,.3);border-top-color:#ffd86a;border-right-color:rgba(190,105,20,.7);border-radius:50%;animation:spin 2.5s linear infinite}
+.loader-ring::before,.loader-ring::after{content:"";position:absolute;border-radius:50%}.loader-ring::before{inset:13px;border:1px dashed rgba(255,210,100,.2);animation:spinReverse 4s linear infinite}.loader-ring::after{inset:-10px;border:1px solid rgba(255,180,45,.08)}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes spinReverse{to{transform:rotate(-360deg)}}
+.loader-brand{margin-top:38px;font-size:18px;font-weight:900;letter-spacing:8px;color:#f7dfaa;text-shadow:0 0 18px rgba(255,190,70,.55);animation:fadeUp 1s ease .7s both}.loader-tagline{margin-top:10px;color:#967b52;font-size:11px;letter-spacing:4px;text-transform:uppercase;animation:fadeUp 1s ease .9s both}
+.loader-progress{width:230px;height:3px;margin-top:30px;overflow:hidden;background:rgba(255,255,255,.08);border-radius:10px;animation:fadeUp 1s ease 1s both}.loader-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#71400c,#d59a32,#fff0b0,#b86a13);box-shadow:0 0 15px #d69a35;animation:loadingBar 4s cubic-bezier(.65,0,.35,1) forwards}
+@keyframes loadingBar{0%{width:0}100%{width:100%}}
+.loader-status{margin-top:12px;color:#6e604d;font-size:10px;letter-spacing:2px;text-transform:uppercase;animation:statusPulse 1.2s ease-in-out infinite alternate}.loader-particles{position:absolute;inset:0;pointer-events:none}.loader-particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#ffd36b;box-shadow:0 0 8px rgba(255,190,70,.9);animation:particleFloat linear infinite}@keyframes particleFloat{0%{transform:translateY(30px) scale(.5);opacity:0}15%{opacity:1}85%{opacity:.7}100%{transform:translateY(-110vh) scale(1.4);opacity:0}}
+@keyframes statusPulse{from{opacity:.45}to{opacity:1}}@keyframes fadeUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:420px){.loader-f{font-size:115px}.loader-ring{width:190px;height:190px}.loader-brand{font-size:15px;letter-spacing:5px}.loader-tagline{font-size:9px;letter-spacing:3px}.loader-progress{width:210px}}
+</style>
+</head>
+<body>
+<div id="loader">
+  <div class="loader-grid"></div>
+  <div class="loader-glow"></div>
+  <div class="loader-particles">
+    <span class="loader-particle" style="left:5%;bottom:-10%;animation-duration:6s;animation-delay:.2s"></span>
+    <span class="loader-particle" style="left:12%;bottom:-10%;animation-duration:8s;animation-delay:1s"></span>
+    <span class="loader-particle" style="left:20%;bottom:-10%;animation-duration:7s;animation-delay:2s"></span>
+    <span class="loader-particle" style="left:28%;bottom:-10%;animation-duration:9s;animation-delay:.5s"></span>
+    <span class="loader-particle" style="left:37%;bottom:-10%;animation-duration:6.5s;animation-delay:1.5s"></span>
+    <span class="loader-particle" style="left:47%;bottom:-10%;animation-duration:8.5s;animation-delay:.8s"></span>
+    <span class="loader-particle" style="left:57%;bottom:-10%;animation-duration:7.5s;animation-delay:2.2s"></span>
+    <span class="loader-particle" style="left:66%;bottom:-10%;animation-duration:9s;animation-delay:.4s"></span>
+    <span class="loader-particle" style="left:74%;bottom:-10%;animation-duration:6s;animation-delay:1.8s"></span>
+    <span class="loader-particle" style="left:83%;bottom:-10%;animation-duration:8s;animation-delay:.7s"></span>
+    <span class="loader-particle" style="left:92%;bottom:-10%;animation-duration:7s;animation-delay:1.3s"></span>
+  </div>
+  <div class="loader-content">
+    <div class="loader-ring"></div>
+    <div class="loader-f">F</div>
+    <div class="loader-brand">FRENZY CLIENT</div>
+    <div class="loader-tagline">Initializing Your Minecraft Experience</div>
+    <div class="loader-progress"><span></span></div>
+    <div class="loader-status">Loading system...</div>
+  </div>
+</div>
+<script>
+const statusMessages=["Loading system...","Initializing Frenzy...","Preparing Minecraft experience...","Optimizing client...","Almost ready..."];
+let i=0;
+const status=document.querySelector('.loader-status');
+const timer=setInterval(()=>{ i++; if(i<statusMessages.length) status.textContent=statusMessages[i]; },800);
+setTimeout(()=>{ clearInterval(timer); status.textContent='System ready.'; },4000);
+setTimeout(()=>{ window.location.replace('home.html'); },4200);
+</script>
+</body>
+</html>
