@@ -26,16 +26,321 @@ body{
   overflow-x:hidden;
 }
 
-/* ===== BACKGROUND ===== */
+/* =========================================================
+   FRENZY LOADING SCREEN
+========================================================= */
+
+#loader{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(255,180,40,.16),transparent 25%),
+    radial-gradient(circle at 20% 80%,rgba(130,65,15,.20),transparent 35%),
+    radial-gradient(circle at 80% 20%,rgba(255,210,90,.10),transparent 35%),
+    linear-gradient(135deg,#050403,#171008 48%,#030303);
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
+}
+
+#loader.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.loader-grid{
+  position:absolute;
+  inset:-50%;
+  background-image:
+    linear-gradient(rgba(255,190,70,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,190,70,.055) 1px,transparent 1px);
+  background-size:55px 55px;
+  transform:perspective(500px) rotateX(60deg);
+  animation:gridMove 8s linear infinite;
+  mask-image:linear-gradient(to bottom,transparent,#000 35%,#000 70%,transparent);
+}
+
+@keyframes gridMove{
+  from{
+    transform:perspective(500px) rotateX(60deg) translateY(0);
+  }
+  to{
+    transform:perspective(500px) rotateX(60deg) translateY(55px);
+  }
+}
+
+.loader-glow{
+  position:absolute;
+  width:430px;
+  height:430px;
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(255,194,70,.22),
+    rgba(170,90,15,.08) 40%,
+    transparent 70%
+  );
+  filter:blur(8px);
+  animation:loaderPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes loaderPulse{
+  0%,100%{
+    transform:scale(.85);
+    opacity:.65;
+  }
+  50%{
+    transform:scale(1.12);
+    opacity:1;
+  }
+}
+
+.loader-content{
+  position:relative;
+  z-index:3;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.loader-f{
+  position:relative;
+  font-size:150px;
+  line-height:.8;
+  font-weight:1000;
+  font-style:italic;
+  letter-spacing:-15px;
+
+  background:linear-gradient(
+    135deg,
+    #fff9df 0%,
+    #ffe8a0 18%,
+    #ffd05a 38%,
+    #b86b12 62%,
+    #6f3908 82%,
+    #ffe59a 100%
+  );
+
+  background-size:250% 250%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+
+  filter:
+    drop-shadow(0 0 8px rgba(255,210,90,.9))
+    drop-shadow(0 0 35px rgba(180,95,15,.65));
+
+  animation:
+    logoReveal 1.4s cubic-bezier(.16,1,.3,1) forwards,
+    goldShift 3s linear infinite 1.4s;
+}
+
+@keyframes logoReveal{
+  0%{
+    opacity:0;
+    transform:scale(.45) rotateX(70deg);
+    filter:blur(18px) drop-shadow(0 0 0 transparent);
+  }
+  60%{
+    opacity:1;
+    transform:scale(1.08) rotateX(0);
+  }
+  100%{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+@keyframes goldShift{
+  0%{
+    background-position:0% 50%;
+  }
+  100%{
+    background-position:250% 50%;
+  }
+}
+
+.loader-ring{
+  position:absolute;
+  width:235px;
+  height:235px;
+  border:1px solid rgba(255,205,100,.3);
+  border-top-color:#ffd86a;
+  border-right-color:rgba(190,105,20,.7);
+  border-radius:50%;
+  animation:spin 2.5s linear infinite;
+}
+
+.loader-ring::before,
+.loader-ring::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+}
+
+.loader-ring::before{
+  inset:13px;
+  border:1px dashed rgba(255,210,100,.2);
+  animation:spinReverse 4s linear infinite;
+}
+
+.loader-ring::after{
+  inset:-10px;
+  border:1px solid rgba(255,180,45,.08);
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes spinReverse{
+  to{
+    transform:rotate(-360deg);
+  }
+}
+
+.loader-brand{
+  margin-top:38px;
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:8px;
+  color:#f7dfaa;
+  text-shadow:0 0 18px rgba(255,190,70,.55);
+  animation:fadeUp 1s ease .7s both;
+}
+
+.loader-tagline{
+  margin-top:10px;
+  color:#967b52;
+  font-size:11px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  animation:fadeUp 1s ease .9s both;
+}
+
+.loader-progress{
+  width:230px;
+  height:2px;
+  margin-top:30px;
+  overflow:hidden;
+  background:rgba(255,255,255,.08);
+  border-radius:10px;
+  animation:fadeUp 1s ease 1s both;
+}
+
+.loader-progress span{
+  display:block;
+  width:0%;
+  height:100%;
+  background:linear-gradient(
+    90deg,
+    #71400c,
+    #d59a32,
+    #fff0b0,
+    #b86a13
+  );
+  box-shadow:0 0 15px #d69a35;
+  animation:loadingBar 2.7s cubic-bezier(.65,0,.35,1) forwards;
+}
+
+@keyframes loadingBar{
+  0%{width:0%}
+  35%{width:35%}
+  70%{width:72%}
+  100%{width:100%}
+}
+
+.loader-status{
+  margin-top:12px;
+  color:#6e604d;
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  animation:statusPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes statusPulse{
+  from{opacity:.45}
+  to{opacity:1}
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(15px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* LOADING PARTICLES */
+
+.loader-particles{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+.loader-particle{
+  position:absolute;
+  width:2px;
+  height:2px;
+  border-radius:50%;
+  background:#ffd36b;
+  box-shadow:0 0 8px rgba(255,190,70,.9);
+  animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+  0%{
+    transform:translateY(30px) scale(.5);
+    opacity:0;
+  }
+  15%{
+    opacity:1;
+  }
+  85%{
+    opacity:.7;
+  }
+  100%{
+    transform:translateY(-110vh) scale(1.4);
+    opacity:0;
+  }
+}
+
+/* =========================================================
+   MAIN BACKGROUND
+========================================================= */
 
 body::before{
   content:"";
   position:fixed;
   inset:0;
   pointer-events:none;
+
   background:
-    radial-gradient(circle at 20% 10%,rgba(255,0,180,.13),transparent 30%),
-    radial-gradient(circle at 85% 80%,rgba(255,180,0,.10),transparent 30%);
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(255,0,180,.13),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(255,180,0,.10),
+      transparent 30%
+    );
+
   z-index:0;
 }
 
@@ -60,8 +365,14 @@ body::before{
 }
 
 @keyframes twinkle{
-  from{opacity:.15;transform:scale(.6)}
-  to{opacity:1;transform:scale(1.4)}
+  from{
+    opacity:.15;
+    transform:scale(.6);
+  }
+  to{
+    opacity:1;
+    transform:scale(1.4);
+  }
 }
 
 /* ===== MAIN ===== */
@@ -117,8 +428,12 @@ nav{
 }
 
 @keyframes rgbText{
-  0%{background-position:0%}
-  100%{background-position:300%}
+  0%{
+    background-position:0%;
+  }
+  100%{
+    background-position:300%;
+  }
 }
 
 nav a{
@@ -224,13 +539,21 @@ nav a:hover{
 
 .btn-main{
   color:#000;
-  background:linear-gradient(135deg,#fff,#ffd700,#ff9d00);
-  box-shadow:0 0 25px rgba(255,215,0,.25);
+  background:linear-gradient(
+    135deg,
+    #fff,
+    #ffd700,
+    #ff9d00
+  );
+
+  box-shadow:
+    0 0 25px rgba(255,215,0,.25);
 }
 
 .btn-main:hover{
   transform:translateY(-3px) scale(1.03);
-  box-shadow:0 0 35px rgba(255,215,0,.5);
+  box-shadow:
+    0 0 35px rgba(255,215,0,.5);
 }
 
 .btn-dark{
@@ -273,8 +596,12 @@ nav a:hover{
 }
 
 @keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
+  0%,100%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-12px);
+  }
 }
 
 .card-title{
@@ -357,7 +684,8 @@ section{
 .feature:hover{
   transform:translateY(-7px);
   border-color:#ffd700;
-  box-shadow:0 15px 40px rgba(255,215,0,.08);
+  box-shadow:
+    0 15px 40px rgba(255,215,0,.08);
 }
 
 .icon{
@@ -401,6 +729,7 @@ section{
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+
   animation:rgbText 5s linear infinite;
 }
 
@@ -443,6 +772,11 @@ details{
   border-radius:14px;
   margin-bottom:12px;
   overflow:hidden;
+  transition:.25s;
+}
+
+details:hover{
+  border-color:#555;
 }
 
 summary{
@@ -576,14 +910,88 @@ footer p{
     width:100%;
     text-align:center;
   }
+
+  .loader-f{
+    font-size:115px;
+  }
+
+  .loader-ring{
+    width:190px;
+    height:190px;
+  }
+
+  .loader-brand{
+    font-size:15px;
+    letter-spacing:5px;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================================================
+     FRENZY LOADING SCREEN
+========================================================= -->
+
+<div id="loader">
+
+  <div class="loader-grid"></div>
+  <div class="loader-glow"></div>
+
+  <div class="loader-particles">
+
+    <span class="loader-particle" style="left:5%;bottom:-10%;animation-duration:6s;animation-delay:.2s"></span>
+    <span class="loader-particle" style="left:12%;bottom:-10%;animation-duration:8s;animation-delay:1s"></span>
+    <span class="loader-particle" style="left:20%;bottom:-10%;animation-duration:7s;animation-delay:2s"></span>
+    <span class="loader-particle" style="left:28%;bottom:-10%;animation-duration:9s;animation-delay:.5s"></span>
+    <span class="loader-particle" style="left:37%;bottom:-10%;animation-duration:6.5s;animation-delay:1.5s"></span>
+    <span class="loader-particle" style="left:47%;bottom:-10%;animation-duration:8.5s;animation-delay:.8s"></span>
+    <span class="loader-particle" style="left:57%;bottom:-10%;animation-duration:7.5s;animation-delay:2.2s"></span>
+    <span class="loader-particle" style="left:66%;bottom:-10%;animation-duration:9s;animation-delay:.4s"></span>
+    <span class="loader-particle" style="left:74%;bottom:-10%;animation-duration:6s;animation-delay:1.8s"></span>
+    <span class="loader-particle" style="left:83%;bottom:-10%;animation-duration:8s;animation-delay:.7s"></span>
+    <span class="loader-particle" style="left:92%;bottom:-10%;animation-duration:7s;animation-delay:1.3s"></span>
+
+  </div>
+
+  <div class="loader-content">
+
+    <div class="loader-ring"></div>
+
+    <div class="loader-f">
+      F
+    </div>
+
+    <div class="loader-brand">
+      FRENZY CLIENT
+    </div>
+
+    <div class="loader-tagline">
+      Initializing Your Minecraft Experience
+    </div>
+
+    <div class="loader-progress">
+      <span></span>
+    </div>
+
+    <div class="loader-status">
+      Loading system...
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     ORIGINAL PAGE
+========================================================= -->
+
 <!-- SPARKLES -->
+
 <div class="sparkles">
+
   <span class="sparkle" style="left:8%;top:12%"></span>
   <span class="sparkle" style="left:18%;top:30%;animation-delay:.4s"></span>
   <span class="sparkle" style="left:31%;top:18%;animation-delay:1s"></span>
@@ -598,12 +1006,16 @@ footer p{
   <span class="sparkle" style="left:61%;top:78%;animation-delay:.8s"></span>
   <span class="sparkle" style="left:76%;top:62%;animation-delay:1.6s"></span>
   <span class="sparkle" style="left:89%;top:85%;animation-delay:.5s"></span>
+
 </div>
+
 
 <div class="page">
 
 <!-- NAV -->
+
 <nav>
+
   <div class="nav-inner">
 
     <div class="logo">
@@ -611,16 +1023,21 @@ footer p{
     </div>
 
     <div>
+
       <a href="#features">Features</a>
       <a href="#download">Download</a>
       <a href="#support">Support</a>
       <a href="#faq">FAQ</a>
+
     </div>
 
   </div>
+
 </nav>
 
+
 <!-- HERO -->
+
 <main class="hero">
 
   <div class="hero-text">
@@ -663,6 +1080,7 @@ footer p{
 
   </div>
 
+
   <div class="hero-card">
 
     <div class="card-title">
@@ -694,7 +1112,9 @@ footer p{
 
 </main>
 
+
 <!-- FEATURES -->
+
 <section id="features">
 
   <h2 class="section-title">
@@ -705,252 +1125,76 @@ footer p{
     Everything designed around a clean Minecraft experience.
   </p>
 
+
   <div class="grid">
 
     <div class="feature">
+
       <div class="icon">⚡</div>
-      <h3>Performance</h3>
+
+      <h3>
+        Performance
+      </h3>
+
       <p>
         Lightweight design focused on smooth gameplay and responsive performance.
       </p>
+
     </div>
 
+
     <div class="feature">
+
       <div class="icon">🎨</div>
-      <h3>Modern UI</h3>
+
+      <h3>
+        Modern UI
+      </h3>
+
       <p>
         A premium dark interface with animated RGB and golden visual effects.
       </p>
+
     </div>
 
+
     <div class="feature">
+
       <div class="icon">🔧</div>
-      <h3>Customization</h3>
+
+      <h3>
+        Customization
+      </h3>
+
       <p>
         Keep your Minecraft setup organized and make the experience your own.
       </p>
+
     </div>
 
+
     <div class="feature">
+
       <div class="icon">🚀</div>
-      <h3>Fast Experience</h3>
+
+      <h3>
+        Fast Experience
+      </h3>
+
       <p>
         Simple navigation and a clean workflow without unnecessary clutter.
       </p>
+
     </div>
 
+
     <div class="feature">
+
       <div class="icon">🛡️</div>
-      <h3>Clean Design</h3>
-      <p>
-        Built with a focused interface so important controls stay easy to find.
-      </p>
-    </div>
 
-    <div class="feature">
-      <div class="icon">🌐</div>
-      <h3>Community</h3>
-      <p>
-        Join the Frenzy community and get help from the support server.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- DOWNLOAD -->
-<section id="download" class="download">
-
-  <h2>Get Frenzy Client</h2>
-
-  <p>
-    Download the latest available Windows build.
-  </p>
-
-  <!-- APNI EXE KI LINK YAHAN DAALNA -->
-  <a
-    class="btn btn-main"
-    href="#"
-    onclick="alert('Windows download link will be added soon.');return false;"
-  >
-    Download for Windows
-  </a>
-
-</section>
-
-<!-- SUPPORT -->
-<section id="support">
-
-  <h2 class="section-title">
-    Need <span>Support?</span>
-  </h2>
-
-  <p class="section-sub">
-    We're here to help.
-  </p>
-
-  <div class="grid">
-
-    <div class="support-card">
-
-      <h3>💬 Discord</h3>
+      <h3>
+        Clean Design
+      </h3>
 
       <p>
-        Join the Frenzy Client Discord server for support,
-        announcements and community discussions.
-      </p>
-
-      <a
-        class="btn btn-main"
-        href="https://discord.gg/SvzQt36jrU"
-        target="_blank"
-      >
-        Join Discord
-      </a>
-
-    </div>
-
-    <div class="support-card">
-
-      <h3>📧 Email</h3>
-
-      <p>
-        For direct customer support, contact the Frenzy Client team by email.
-      </p>
-
-      <a
-        class="btn btn-dark"
-        href="mailto:airoxofficial456@gmail.com"
-      >
-        Contact Support
-      </a>
-
-    </div>
-
-    <div class="support-card">
-
-      <h3>💻 GitHub</h3>
-
-      <p>
-        Check the project repository for updates and development information.
-      </p>
-
-      <a
-        class="btn btn-dark"
-        href="https://github.com/DeveloperFrenz/frenzyclient"
-        target="_blank"
-      >
-        View GitHub
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-
-  <h2 class="section-title">
-    Frequently Asked <span>Questions</span>
-  </h2>
-
-  <p class="section-sub">
-    Quick answers about Frenzy Client.
-  </p>
-
-  <div class="faq">
-
-    <details>
-      <summary>What is Frenzy Client?</summary>
-      <p>
-        Frenzy Client is a modern Minecraft Java client and launcher project
-        focused on a clean interface and gaming experience.
-      </p>
-    </details>
-
-    <details>
-      <summary>Which Minecraft Edition is supported?</summary>
-      <p>
-        Frenzy Client is designed for Minecraft Java Edition.
-      </p>
-    </details>
-
-    <details>
-      <summary>Where can I get support?</summary>
-      <p>
-        You can join the official Discord server or contact the support email
-        listed above.
-      </p>
-    </details>
-
-    <details>
-      <summary>Is Frenzy Client free?</summary>
-      <p>
-        Availability and distribution of individual builds may vary.
-        Check the official download section for the current release.
-      </p>
-    </details>
-
-    <details>
-      <summary>Where can I find project updates?</summary>
-      <p>
-        Project development information can be found on the official GitHub
-        repository and Discord community.
-      </p>
-    </details>
-
-  </div>
-
-</section>
-
-<!-- FOOTER -->
-<footer>
-
-  <div class="footer-logo">
-    FRENZY CLIENT
-  </div>
-
-  <p>
-    Minecraft Java Client & Launcher
-  </p>
-
-  <div class="developer">
-    Developed By- <strong>KrypticFrenz</strong>
-  </div>
-
-  <p style="margin-top:20px;font-size:12px">
-    © 2026 Frenzy Client. All rights reserved.
-  </p>
-
-</footer>
-
-</div>
-
-<script>
-
-/* ===== CLICK ANIMATION ===== */
-
-document.addEventListener("click", function(e){
-
-  var ripple = document.createElement("div");
-
-  ripple.className = "ripple";
-
-  ripple.style.left = e.clientX + "px";
-  ripple.style.top = e.clientY + "px";
-
-  document.body.appendChild(ripple);
-
-  setTimeout(function(){
-    ripple.remove();
-  },600);
-
-});
-
-</script>
-
-</body>
-</html>
+        Built with a focused interface so important contro
